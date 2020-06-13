@@ -1,0 +1,20 @@
+<div class="text">
+  <h4>{{cardData.label}}</h4>
+
+  <span class="total">{{cardData.total}}</span>
+
+  <span>
+    <mat-icon color="primary">trending_up</mat-icon>
+  </span>
+
+  <span class="description">
+    {{cardData.percentage}}%
+  </span>
+
+
+  <span> of target</span>
+
+</div>
+<div class="widget">
+  <highcharts-chart class="chart" [Highcharts]="Highcharts" [options]="chartOptions"></highcharts-chart>
+</div>

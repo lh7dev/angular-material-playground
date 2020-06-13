@@ -1,0 +1,24 @@
+:host {
+  .mat-icon {
+    vertical-align: middle;
+    margin-right: 20px;
+  }
+
+  mat-card-header{
+    display: flex;
+    align-items: center;
+  }
+
+  .profile-header-content {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+  }
+
+  img {
+    border-radius: 50% 50%;
+    height: 65px;
+    width: 65px;
+  }
+}
+
