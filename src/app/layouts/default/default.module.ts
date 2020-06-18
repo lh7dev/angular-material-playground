@@ -1,21 +1,28 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 // Flex Layout
 import { FlexLayoutModule } from '@angular/flex-layout';
 // Material
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSidenavModule } from '@angular/material/sidenav';
-// app
+
+// app modules
+import { SharedModule } from 'src/app/shared/shared.module';
+
+// app components
 import { DefaultComponent } from './default.component';
 import { DashboardComponent } from 'src/app/modules/dashboard/dashboard.component';
-import { RouterModule } from '@angular/router';
-import { PostsComponent } from 'src/app/modules/posts/posts.component';
-import { SharedModule } from 'src/app/shared/shared.module';
+
+// app services
 import { DashboardService } from 'src/app/modules/dashboard.service';
 
 @NgModule({
-  declarations: [DefaultComponent, DashboardComponent, PostsComponent],
+  declarations: [
+    DefaultComponent,
+    DashboardComponent
+  ],
   imports: [
     CommonModule,
     RouterModule,
@@ -25,9 +32,11 @@ import { DashboardService } from 'src/app/modules/dashboard.service';
     // Materials
     MatCardModule,
     MatDividerModule,
-    MatSidenavModule
+    MatSidenavModule,
   ],
-  providers: [DashboardService],
+  providers: [
+    DashboardService
+  ],
   exports: [],
 })
 export class DefaultModule {}

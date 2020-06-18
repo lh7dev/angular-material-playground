@@ -9,8 +9,6 @@ import { MatTableDataSource } from '@angular/material/table';
 export class TableComponent implements OnInit {
   @Input() tableData: TableWidgetData;
 
-  columnViewConfig;
-
   constructor() {}
 
   ngOnInit(): void {

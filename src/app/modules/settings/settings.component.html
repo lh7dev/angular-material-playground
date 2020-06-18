@@ -1,0 +1,30 @@
+<mat-tab-group>
+  <mat-tab label="Business Information">
+    <div class="tab-content">
+
+      <div class="business-info">
+        <h2>My Business Information</h2>
+
+        <label for="bName">Business Name:</label>
+        <h3 #bName>{{business.name}}</h3>
+
+        <label for="bAddress">Address:</label>
+        <div id="bAddress">
+          <span>{{business.address.address_line_1}}</span><span *ngIf="business.address.address_line_2 != undefined">
+            {{business.address.address_line_2}}</span><br>
+          <span>{{business.address.city}} {{business.address.state}}, {{business.address.zipcode}}</span>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="Operations">
+    <div class="tab-content">
+
+      <h2>Operation Settings</h2>
+      <div>
+        <h3>Currency: USD</h3>
+        <h3>Measurement System: Imperial System</h3>
+      </div>
+    </div>
+  </mat-tab>
+</mat-tab-group>

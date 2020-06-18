@@ -1,0 +1,31 @@
+<mat-toolbar class="entity-toolbar">
+  <mat-toolbar-row>
+
+    <span class='etb-title' *ngIf="title != null">{{title}}</span>
+
+    <div fxFlex fxLayout="row" fxLayoutAlign="flex-end">
+      <mat-form-field class="example-form-field" *ngIf="showSearchBar">
+        <input #searchField matInput type="text" placeholder="Search" class="search-field"
+          (keyup)="onSearchChaged(searchField.value)" (change)="onSearchChaged(searchField.value)">
+        <button mat-button *ngIf="searchField.value" matSuffix mat-icon-button aria-label="Clear"
+          (click)="searchField.value=''">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <ul fxLayout="row" fxLayoutGap="20px">
+        <li *ngIf="showNewBtn">
+          <button mat-raised-button color="primary" (click)="onNew()">
+            New
+          </button>
+        </li>
+        <li *ngIf="showDeleteBtn">
+          <button mat-raised-button color="warn" (click)="onDelete()">
+            Delete
+          </button>
+        </li>
+      </ul>
+    </div>
+
+  </mat-toolbar-row>
+</mat-toolbar>

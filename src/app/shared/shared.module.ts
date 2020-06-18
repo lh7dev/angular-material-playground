@@ -6,11 +6,16 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 // material
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 // Highcharts
@@ -24,6 +29,12 @@ import { AreaComponent } from './widgets/area/area.component';
 import { CardComponent } from './widgets/card/card.component';
 import { PieComponent } from './widgets/pie/pie.component';
 import { TableComponent } from './widgets/table/table.component';
+import { EntityToolbarComponent } from './components/entity-toolbar/entity-toolbar.component';
+import { AuthService } from './services/auth.service';
+import { DummyDataService } from './testing/dummy-data.service';
+import { DeleteViewComponent } from './components/delete-view/delete-view.component';
+import { EntityService } from './Abstracts/entity-service.class';
+import { PhonePipe } from './directives/phone-pipe.directive';
 
 @NgModule({
   declarations: [
@@ -34,6 +45,9 @@ import { TableComponent } from './widgets/table/table.component';
     CardComponent,
     PieComponent,
     TableComponent,
+    EntityToolbarComponent,
+    DeleteViewComponent,
+    PhonePipe
   ],
   imports: [
     CommonModule,
@@ -45,12 +59,17 @@ import { TableComponent } from './widgets/table/table.component';
     // Material
     MatButtonModule,
     MatCardModule,
+    MatCheckboxModule,
+    MatDialogModule,
     MatDividerModule,
     MatIconModule,
+    MatInputModule,
     MatMenuModule,
     MatListModule,
+    MatSnackBarModule,
     MatTableModule,
-    MatToolbarModule,
+    MatTabsModule,
+    MatToolbarModule
   ],
   exports: [
     HeaderComponent,
@@ -59,7 +78,12 @@ import { TableComponent } from './widgets/table/table.component';
     AreaComponent,
     CardComponent,
     PieComponent,
-    TableComponent
+    TableComponent,
+    EntityToolbarComponent,
+    DeleteViewComponent,
+    PhonePipe
   ],
+
+  providers: [AuthService, DummyDataService],
 })
 export class SharedModule {}

@@ -1,0 +1,93 @@
+<div class="header-section">
+  <h2>Edit Customer</h2>
+</div>
+
+
+<mat-tab-group>
+  <!-- Customer Info tab -->
+  <mat-tab label="Customer Info">
+    <mat-dialog-content>
+      <form [formGroup]="form" (ngSubmit)="applyEdit()" #EditForm>
+        <section class="customer-name">
+          <mat-form-field>
+            <input matInput placeholder='Customer Name' type='text' min=3 formControlName='name' required>
+          </mat-form-field>
+        </section>
+        <section class="address-info">
+          <h4>Customer's main address</h4>
+          <mat-form-field>
+            <input matInput placeholder="Address line 1" type='text' min='5' formControlName='address1' required>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder='Address line 2' type='text' formControlName='address2'>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder='City' type='text' min=3 formControlName='city' required>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder='State' type='text' min=3 formControlName='state' required>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder='Zip Code' type='text' formControlName='zipcode' required>
+          </mat-form-field>
+        </section>
+        <section class="contact-info">
+          <mat-divider></mat-divider>
+          <h4>Default Contact</h4>
+          <div class="item">
+            <div class="item-content">
+              <h3 class="contact-name">{{defaultContact.name}}</h3>
+              <span>phone: <a mat-button color="primary"
+                  [href]="'tel:'+defaultContact.phone">{{defaultContact.phone | phone}}</a></span> <br>
+              <span>email: <a mat-button color="primary"
+                  [href]="'mailto:'+defaultContact.email">{{defaultContact.email}}</a></span>
+            </div>
+          </div>
+        </section>
+      </form>
+    </mat-dialog-content>
+    <div class="actions">
+      <button mat-raised-button color='primary' (click)="applyEdit()">Apply</button>
+      <button mat-raised-button type="button" (click)='cancel()'>Cancel</button>
+    </div>
+  </mat-tab>
+
+  <!-- Contact tab -->
+  <mat-tab label="Contacts">
+    <mat-dialog-content>
+      <div class="new-contact-form">
+        <form [formGroup]="contactForm" (ngSubmit)="newContact()">
+          <h3>Add new contact</h3>
+          <section class="customer-name">
+            <mat-form-field>
+              <input matInput placeholder='Contact Name' type='text' min=3 formControlName='name' required>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder='phone number' type='text' formControlName='phone' required>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder='email' type='email' formControlName='email' required>
+            </mat-form-field>
+          </section>
+
+          <button mat-raised-button type="submit">New Contact</button>
+        </form>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="item" *ngFor="let contact of contacts">
+        <div class="item-content">
+          <h3 class="contact-name">{{contact.name}}</h3>
+          <span>phone: <a mat-button color="primary" [href]="'tel:'+contact.phone">{{contact.phone | phone}}</a></span>
+          <br>
+          <span>email: <a mat-button color="primary" [href]="'mailto:'+contact.email">{{contact.email}}</a></span>
+          <div class="item-actions">
+            <button mat-stroked-button color="primary">set as default</button>
+            <button mat-button color="accent">edit</button>
+            <button mat-button color="warn">delete</button>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+      </div>
+    </mat-dialog-content>
+  </mat-tab>
+</mat-tab-group>

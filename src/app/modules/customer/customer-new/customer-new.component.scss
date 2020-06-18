@@ -1,0 +1,24 @@
+@import "main";
+
+.header-section {
+  display: flex;
+}
+
+.content-section {
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  >* {
+      margin-left: 4px;
+      margin-right: 4px;
+      margin-top: 15px;
+  }
+}
+
+section {
+  display: flex;
+  flex-flow: column;
+}

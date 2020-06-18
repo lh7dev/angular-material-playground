@@ -1,0 +1,47 @@
+<div class="header-section">
+  <h2>Customer Details</h2>
+</div>
+
+<mat-dialog-content>
+  <mat-tab-group>
+    <mat-tab label="Overview">
+      <div class='overview-section'>
+        <label for="eName">Customer Name:</label>
+        <h3 #eName>{{entity.name | uppercase}}</h3>
+
+        <label for="eStatus">Status:</label>
+        <h3 #eStatus>{{entity.status}}</h3>
+
+        <label for="eAddress">Address:</label>
+        <h3>
+          <span>{{entity.address.address_line_1}}</span><span *ngIf="entity.address.address_line_2 != undefined">
+            {{entity.address.address_line_2}}</span><br>
+          <span>{{entity.address.city}} {{entity.address.state}}, {{entity.address.zipcode}}</span>
+        </h3>
+
+        <mat-divider></mat-divider>
+
+        <h3>Default Contact</h3>
+        <label for="ecName">Name:</label>
+        <h3 #ecName>{{entity.default_contact.name}}</h3>
+        <label for="ecPhone">phone:</label>
+        <a mat-button #ecPhone [href]="'tel:'+entity.default_contact.phone">{{entity.default_contact.phone | phone}}</a>
+        <br>
+        <label for="ecEmail">email:</label>
+        <a mat-button [href]="'mailto:'+entity.default_contact.email" #ecEmail>{{entity.default_contact.email}}</a>
+
+
+      </div>
+    </mat-tab>
+    <mat-tab label="Contacts">
+      <app-customer-details-contact [contacts]="contacts">
+      </app-customer-details-contact>
+    </mat-tab>
+  </mat-tab-group>
+
+</mat-dialog-content>
+
+<div class="actions">
+  <button mat-raised-button color="primary" type="button" (click)='openEdit()'>Edit</button>
+  <button mat-raised-button type="button" (click)='dialogClose()'>Close</button>
+</div>

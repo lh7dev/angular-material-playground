@@ -1,0 +1,4 @@
+<app-entity-toolbar [title]="title" class="entity-Toolbar" showNewBtn="true" showDeleteBtn="true"
+  showSearchBar="true" (newEvent)="onNew()" (deleteEvent)="onDelete()" (searchChanged)="List.searchFor($event)">
+</app-entity-toolbar>
+<app-product-list #List></app-product-list>

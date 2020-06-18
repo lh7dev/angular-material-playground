@@ -1,0 +1,138 @@
+// Import library functions for theme creation.
+@import '~@angular/material/theming';
+
+/* For use in src/lib/core/theming/_palette.scss */
+$md-ms-primary: (
+    50 : #e4eff4,
+    100 : #bcd8e3,
+    200 : #90bed1,
+    300 : #64a3bf,
+    400 : #4290b1,
+    500 : #217ca3,
+    600 : #1d749b,
+    700 : #186991,
+    800 : #145f88,
+    900 : #0b4c77,
+    A100 : #a8d9ff,
+    A200 : #75c2ff,
+    A400 : #42acff,
+    A700 : #29a1ff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+
+
+/* For use in src/lib/core/theming/_palette.scss */
+$md-ms-asphalt: (
+    50 : #e6e7ea,
+    100 : #c2c3ca,
+    200 : #999ca6,
+    300 : #707482,
+    400 : #515668,
+    500 : #32384d,
+    600 : #2d3246,
+    700 : #262b3d,
+    800 : #1f2434,
+    900 : #131725,
+    A100 : #6888ff,
+    A200 : #3560ff,
+    A400 : #0238ff,
+    A700 : #0032e7,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #ffffff,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+
+/* For use in src/lib/core/theming/_palette.scss */
+$md-ms-mustard: (
+    50 : #fcf3e6,
+    100 : #f6e0c1,
+    200 : #f1cc98,
+    300 : #ebb86e,
+    400 : #e6a84f,
+    500 : #e29930,
+    600 : #df912b,
+    700 : #da8624,
+    800 : #d67c1e,
+    900 : #cf6b13,
+    A100 : #fffffe,
+    A200 : #ffe1cb,
+    A400 : #ffc498,
+    A700 : #ffb67f,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+
+
+// Include non-theme styles for core.
+@include mat-core();
+
+// $primary:  mat-palette($md-ms-primary);
+$primary:  mat-palette($md-ms-asphalt);
+$accent:  mat-palette($md-ms-mustard);
+$waning:  mat-palette($mat-red);
+
+$theme-dark: mat-light-theme($primary, $accent, $waning);
+
+// Include theme styles for Angular Material components.
+@include angular-material-theme($theme-dark);
+
+
+
+.entity-toolbar {
+  // Get the default hue for a palette.
+  color: mat-color($primary);
+
+  // Get a specific hue for a palette.
+  // See https://material.io/archive/guidelines/style/color.html#color-color-palette for hues.
+  background-color: mat-color($primary, 100);
+
+  // Get a relative color for a hue ('lighter' or 'darker')
+  outline-color: mat-color($primary, lighter);
+
+  // Get a contrast color for a hue by adding `-contrast` to any other key.
+  border-color: mat-color($primary, '300-contrast');
+}

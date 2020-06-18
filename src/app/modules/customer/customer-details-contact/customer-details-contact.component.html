@@ -1,0 +1,10 @@
+<div class="list-content">
+  <div class="item" *ngFor="let contact of contacts">
+    <div class="item-content">
+      <h3 class="contact-name">{{contact.name}}</h3>
+      <span>phone: <a mat-button color="primary" [href]="'tel:'+contact.phone">{{contact.phone | phone}}</a></span> <br>
+      <span>email: <a mat-button color="primary" [href]="'mailto:'+contact.email">{{contact.email}}</a></span>
+    </div>
+    <mat-divider></mat-divider>
+  </div>
+</div>
