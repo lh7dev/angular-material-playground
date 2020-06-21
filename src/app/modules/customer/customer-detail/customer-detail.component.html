@@ -3,7 +3,12 @@
 </div>
 
 <mat-dialog-content>
-  <mat-tab-group>
+
+<div class="loading-spinner-wrap" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
+</div>
+
+  <mat-tab-group *ngIf="!isLoading">
     <mat-tab label="Overview">
       <div class='overview-section'>
         <label for="eName">Customer Name:</label>

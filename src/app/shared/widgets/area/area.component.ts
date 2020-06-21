@@ -24,7 +24,7 @@ export class AreaComponent implements OnInit {
       window.dispatchEvent(
         new Event('resize')
       );
-    }, 300)
+    }, 300);
 
     // provides UI to export charts in different formats
     HC_exporting(Highcharts);

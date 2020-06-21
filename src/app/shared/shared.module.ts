@@ -35,6 +35,8 @@ import { DummyDataService } from './testing/dummy-data.service';
 import { DeleteViewComponent } from './components/delete-view/delete-view.component';
 import { EntityService } from './Abstracts/entity-service.class';
 import { PhonePipe } from './directives/phone-pipe.directive';
+import { ViewStateService } from './services/view-state.service';
+import { BusinessService } from './services/business.service';
 
 @NgModule({
   declarations: [
@@ -84,6 +86,6 @@ import { PhonePipe } from './directives/phone-pipe.directive';
     PhonePipe
   ],
 
-  providers: [AuthService, DummyDataService],
+  providers: [AuthService, DummyDataService, ViewStateService, BusinessService],
 })
 export class SharedModule {}

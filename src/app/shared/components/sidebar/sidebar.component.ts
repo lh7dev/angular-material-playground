@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-sidebar',
@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SidebarComponent implements OnInit {
 
+  @Output() navigation = new EventEmitter<any>()
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  onNavigation(){
+    this.navigation.emit();
   }
 
 }

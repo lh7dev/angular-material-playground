@@ -13,30 +13,55 @@ import {
   InventoryItem,
 } from '../Abstracts/inventory.interface';
 import { CustomerListItem, Customer } from '../Abstracts/customer.interface';
-import { ProductListItem } from '../Abstracts/product.interface';
+import { ProductListItem, Product } from '../Abstracts/product.interface';
+
+import { HttpClient } from '@angular/common/http';
+// TEST DATA
 
 @Injectable({
   providedIn: 'root',
 })
 export class DummyDataService {
-  constructor() {}
+
+  private TestData(xDataKey): Observable<any> {
+    return new Observable<any>((observer) => {
+      const fileName = 'test-data';
+      this.http
+        .get('./assets/test-data/' + fileName + '.json')
+        .subscribe((result) => {
+          observer.next(result[xDataKey]);
+        });
+    });
+  }
+
+  get CUSTOMERS(): Observable<Customer[]> {
+    return <Observable<Customer[]>>this.TestData('CUSTOMERS');
+  }
+
+  get PRODUCTS(): Observable<Product[]> {
+    return <Observable<Product[]>>this.TestData('PRODUCTS');
+  }
+
+  constructor(private http: HttpClient) {}
 
   customerDetails(data: Entity): Observable<ApiResponse> {
     return new Observable<ApiResponse>((observer) => {
       console.log('sending data... not really');
-      const result = __CUSTOMERS__.filter((x) => {
-        if (x._id == data._id) {
-          return x;
-        }
+      this.CUSTOMERS.subscribe((result) => {
+        const customer = result.filter((x) => {
+          if (x.id == data.id) {
+            return x;
+          }
+        });
+        observer.next(this.toApiResponse(true, null, customer));
       });
-      observer.next(this.toApiResponse(true, null, result));
     });
   }
 
-  private toCustomerListItemList(data:Customer[]): CustomerListItem[] {
-    var res = data.map(x=>{
-      var item: CustomerListItem ={
-        _id: x._id,
+  private toCustomerListItemList(data: Customer[]): CustomerListItem[] {
+    var res = data.map((x) => {
+      var item: CustomerListItem = {
+        id: x.id,
         number: x.number,
         name: x.name,
         status: x.status,
@@ -46,31 +71,58 @@ export class DummyDataService {
     console.log(res);
     return res;
   }
+
   customerList(): Observable<ApiResponse> {
     return new Observable<ApiResponse>((observer) => {
-      const list: CustomerListItem[] = this.toCustomerListItemList(__CUSTOMERS__);
-      const listViewData: EntityListData = this.toEntityListData(list);
-      console.log(__CUSTOMERS__);
-      const packagedResponse = this.toApiResponse(true, null, listViewData);
-      observer.next(packagedResponse);
+      this.CUSTOMERS.subscribe((result) => {
+        console.log(result);
+        const list: CustomerListItem[] = this.toCustomerListItemList(result);
+        const listViewData: EntityListData = this.toEntityListData(list);
+        console.log(result);
+        const packagedResponse = this.toApiResponse(true, null, listViewData);
+        observer.next(packagedResponse);
+      });
     });
   }
 
   customerDelete(data: Entity): Observable<ApiResponse> {
     return new Observable<ApiResponse>((observer) => {
-      this.toApiResponse(false, "Delete action hasn't been implemented");
+      observer.next(this.toApiResponse(false, "Delete action hasn't been implemented"));
     });
   }
 
   customerEdit(data: Entity): Observable<ApiResponse> {
     return new Observable<ApiResponse>((observer) => {
-      this.toApiResponse(false, "Delete action hasn't been implemented", data);
+      observer.next(this.toApiResponse(false, "Delete action hasn't been implemented", data));
     });
+  }
+
+  private toProductListItemList(data: Product[]):ProductListItem[] {
+    var res = data.map((x) => {
+      var item: ProductListItem = {
+        id: x.id,
+        sku: x.sku,
+        name: x.name,
+        status: x.status,
+        type: x.type.type,
+        price: x.price
+      };
+      return item;
+    });
+    console.log(res);
+    return res;
   }
 
   productList(): Observable<ApiResponse> {
     return new Observable<ApiResponse>((observer) => {
-      observer.next(_PRODUCT_LIST_RESPONSE_);
+      this.PRODUCTS.subscribe((result) => {
+        console.log(result);
+        const list: ProductListItem[] = this.toProductListItemList(result);
+        const listViewData: EntityListData = this.toEntityListData(list);
+        console.log(result);
+        const packagedResponse = this.toApiResponse(true, null, listViewData);
+        observer.next(packagedResponse);
+      });
     });
   }
 
@@ -110,6 +162,8 @@ export class DummyDataService {
   }
 }
 
+// Customer list moch
+
 const __APPLY_NEW_RESPONSE__ = {
   success: true,
   message: 'Customer created successfully',
@@ -118,84 +172,84 @@ const __APPLY_NEW_RESPONSE__ = {
 // dummy inventory list
 const _INVENTORY_LIST_: InventoryListItem[] = [
   {
-    _id: '12345678900',
+    id: '12345678900',
     product: 'ASUS Laptop - Core I3 - 4GB RAM - 256GB SSD',
     sku: '12345678900',
     status: 'active',
     inStock: 15,
   },
   {
-    _id: '12345678901',
+    id: '12345678901',
     product: 'ASUS Laptop - Core I5 - 8GB RAM - 500GB SSD',
     sku: '12345678901',
     status: 'active',
     inStock: 10,
   },
   {
-    _id: '12345678902',
+    id: '12345678902',
     product: 'ASUS Laptop - Core I5 - 8GB RAM - 1TB HDD',
     sku: '12345678902',
     status: 'active',
     inStock: 11,
   },
   {
-    _id: '12345678903',
+    id: '12345678903',
     product: 'ASUS Laptop - Core I5 - 16GB RAM - 500GB SSD',
     sku: '12345678903',
     status: 'active',
     inStock: 21,
   },
   {
-    _id: '12345678904',
+    id: '12345678904',
     product: 'ASUS Laptop - Core I7 - 16GB RAM - 500GB SSD',
     sku: '12345678904',
     status: 'active',
     inStock: 15,
   },
   {
-    _id: '12345678905',
+    id: '12345678905',
     product: 'ASUS Laptop - Core I7 - 16GB RAM - 1TB SSD',
     sku: '12345678905',
     status: 'active',
     inStock: 15,
   },
   {
-    _id: '12345678906',
+    id: '12345678906',
     product: 'ASUS Laptop - Core I7 - 32GB RAM - 1TB SSD',
     sku: '12345678906',
     status: 'active',
     inStock: 9,
   },
   {
-    _id: '12345678907',
+    id: '12345678907',
     product: 'Samsung Laptop - Core I3 - 4GB RAM - 256GB SSD',
     sku: '12345678907',
     status: 'active',
     inStock: 0,
   },
   {
-    _id: '12345678908',
+    id: '12345678908',
     product: 'HP Laptop - Core I3 - 4GB RAM - 256GB SSD',
     sku: '12345678908',
     status: 'active',
     inStock: 3,
   },
   {
-    _id: '12345678909',
+    id: '12345678909',
     product: 'HP Laptop - Core I5 - 32GB RAM - 1TB SSD',
     sku: '12345678909',
     status: 'active',
     inStock: 7,
   },
   {
-    _id: '12345678910',
+    id: '12345678910',
     product: 'ASUS Laptop - Core I7 - 32GB RAM - 1TB SSD - 1TB HDD',
     sku: '12345678910',
     status: 'active',
     inStock: 5,
   },
   {
-    _id: '12345678911',
+    id: '12345678911',
     product: 'Toshiba Laptop - Core I3 - 4GB RAM - 256GB SSD',
     sku: '12345678911',
     status: 'active',
@@ -213,10 +267,10 @@ const _INVENTORY_LIST_ApiRes_: ApiResponse = {
   data: _INVENTORY_ENTITY_LIST_,
 };
 
-// DUMMY DATA
+// PRODUCTS DATA
 const _PRODUCT_LIST_: ProductListItem[] = [
   {
-    _id: '12255sdasdqwefaaa',
+    id: '12255sdasdqwefaaa',
     sku: '125400',
     name: 'Laptop PC - Core I3 - 256GB SSD - 4GB RAM',
     status: 'active',
@@ -224,7 +278,7 @@ const _PRODUCT_LIST_: ProductListItem[] = [
     type: 'product',
   },
   {
-    _id: '12255sdasdqwefaab',
+    id: '12255sdasdqwefaab',
     sku: '125401',
     name: 'Laptop PC - Core I5 - 500GB SSD - 8GB RAM',
     status: 'active',
@@ -232,7 +286,7 @@ const _PRODUCT_LIST_: ProductListItem[] = [
     type: 'product',
   },
   {
-    _id: '12255sdasdqwefaac',
+    id: '12255sdasdqwefaac',
     sku: '125402',
     name: 'Laptop PC - Core I7 - 1TB SSD - 16GB RAM',
     status: 'active',
@@ -240,7 +294,7 @@ const _PRODUCT_LIST_: ProductListItem[] = [
     type: 'product',
   },
   {
-    _id: '12255sdasdqwefsxc',
+    id: '12255sdasdqwefsxc',
     sku: '125403',
     name: 'Laptop Repair',
     status: 'active',
@@ -248,7 +302,7 @@ const _PRODUCT_LIST_: ProductListItem[] = [
     type: 'service',
   },
   {
-    _id: '12255sdasdqwefsxc',
+    id: '12255sdasdqwefsxc',
     sku: '125403',
     name: 'Laptop Repair',
     status: 'active',
@@ -256,7 +310,7 @@ const _PRODUCT_LIST_: ProductListItem[] = [
     type: 'service',
   },
   {
-    _id: '12255sdasdqwefsxc',
+    id: '12255sdasdqwefsxc',
     sku: '125403',
     name: 'Laptop Repair',
     status: 'active',
@@ -264,7 +318,7 @@ const _PRODUCT_LIST_: ProductListItem[] = [
     type: 'service',
   },
   {
-    _id: '12255sdasdqwefsxc',
+    id: '12255sdasdqwefsxc',
     sku: '125403',
     name: 'Laptop Repair',
     status: 'active',
@@ -272,7 +326,7 @@ const _PRODUCT_LIST_: ProductListItem[] = [
     type: 'service',
   },
   {
-    _id: '12255sdasdqwefsxc',
+    id: '12255sdasdqwefsxc',
     sku: '125403',
     name: 'Laptop Repair',
     status: 'active',
@@ -280,7 +334,7 @@ const _PRODUCT_LIST_: ProductListItem[] = [
     type: 'service',
   },
   {
-    _id: '12255sdasdqwefsxc',
+    id: '12255sdasdqwefsxc',
     sku: '125403',
     name: 'Laptop Repair',
     status: 'active',
@@ -288,7 +342,7 @@ const _PRODUCT_LIST_: ProductListItem[] = [
     type: 'service',
   },
   {
-    _id: '12255sdasdqwefsxc',
+    id: '12255sdasdqwefsxc',
     sku: '125403',
     name: 'Laptop Repair',
     status: 'active',
@@ -296,7 +350,7 @@ const _PRODUCT_LIST_: ProductListItem[] = [
     type: 'service',
   },
   {
-    _id: '12255sdasdqwefsxc',
+    id: '12255sdasdqwefsxc',
     sku: '125403',
     name: 'Laptop Repair',
     status: 'active',
@@ -304,7 +358,7 @@ const _PRODUCT_LIST_: ProductListItem[] = [
     type: 'service',
   },
   {
-    _id: '12255sdasdqwefsxc',
+    id: '12255sdasdqwefsxc',
     sku: '125403',
     name: 'Laptop Repair',
     status: 'active',
@@ -312,7 +366,7 @@ const _PRODUCT_LIST_: ProductListItem[] = [
     type: 'service',
   },
   {
-    _id: '12255sdasdqwefsxc',
+    id: '12255sdasdqwefsxc',
     sku: '125403',
     name: 'Laptop Repair',
     status: 'active',
@@ -320,7 +374,7 @@ const _PRODUCT_LIST_: ProductListItem[] = [
     type: 'service',
   },
   {
-    _id: '12255sdasdqwefsxc',
+    id: '12255sdasdqwefsxc',
     sku: '125403',
     name: 'Laptop Repair',
     status: 'active',
@@ -339,319 +393,6 @@ const _PRODUCT_LIST_RESPONSE_: ApiResponse = {
   data: _PRODUCT_LIST_DATA_,
 };
 
-const __CUSTOMERS__: Customer[] = [
-  {
-    _id: '125400',
-    number: '125400',
-    name: 'west coast logistics llc',
-    status: 'active',
-    address: {
-      country: 'united states',
-      address_line_1: '1254 St. Pedro',
-      city: 'Miami',
-      state: 'Florida',
-      zipcode: '33015',
-    },
-    default_contact: {
-      name: 'Andrew Hoffman',
-      phone: '1112223333',
-      email: 'ahoffman@xyz.com',
-    },
-    contacts: [
-      {
-        name: 'Jhon Doe',
-        phone: '1112223333',
-        email: 'ahoffman@xyz.com',
-      },
-      {
-        name: 'Maria Isabel',
-        phone: '1112223333',
-        email: 'ahoffman@xyz.com',
-      },
-      {
-        name: 'Andrew Hoffman',
-        phone: '1112223333',
-        email: 'ahoffman@xyz.com',
-      },
-    ],
-  },
-  {
-    _id: '125401',
-    number: '125401',
-    name: 'east coast logistics llc',
-    status: 'active',
-    address: {
-      country: 'united states',
-      address_line_1: '1254 St. Pedro',
-      city: 'Miami',
-      state: 'Florida',
-      zipcode: '33015',
-    },
-    default_contact: {
-      name: 'Andrew Hoffman',
-      phone: '1112223333',
-      email: 'ahoffman@xyz.com',
-    },
-    contacts: [
-      {
-        name: 'Andrew Hoffman',
-        phone: '1112223333',
-        email: 'ahoffman@xyz.com',
-      },
-    ],
-  },
-  {
-    _id: '125402',
-    number: '125402',
-    name: 'Arnaldo Electrics llc',
-    status: 'active',
-    address: {
-      country: 'united states',
-      address_line_1: '1254 St. Pedro',
-      city: 'Miami',
-      state: 'Florida',
-      zipcode: '33015',
-    },
-    default_contact: {
-      name: 'Andrew Hoffman',
-      phone: '1112223333',
-      email: 'ahoffman@xyz.com',
-    },
-    contacts: [
-      {
-        name: 'Andrew Hoffman',
-        phone: '1112223333',
-        email: 'ahoffman@xyz.com',
-      },
-    ],
-  },
-  {
-    _id: '125403',
-    number: '125403',
-    name: 'sonynuckles llc',
-    status: 'active',
-    address: {
-      country: 'united states',
-      address_line_1: '1254 St. Pedro',
-      city: 'Miami',
-      state: 'Florida',
-      zipcode: '33015',
-    },
-    default_contact: {
-      name: 'Andrew Hoffman',
-      phone: '1112223333',
-      email: 'ahoffman@xyz.com',
-    },
-    contacts: [
-      {
-        name: 'Andrew Hoffman',
-        phone: '1112223333',
-        email: 'ahoffman@xyz.com',
-      },
-    ],
-  },
-  {
-    _id: '125404',
-    number: '125404',
-    name: 'JC Metalurgic llc',
-    status: 'active',
-    address: {
-      country: 'united states',
-      address_line_1: '1254 St. Pedro',
-      city: 'Miami',
-      state: 'Florida',
-      zipcode: '33015',
-    },
-    default_contact: {
-      name: 'Andrew Hoffman',
-      phone: '1112223333',
-      email: 'ahoffman@xyz.com',
-    },
-    contacts: [
-      {
-        name: 'Andrew Hoffman',
-        phone: '1112223333',
-        email: 'ahoffman@xyz.com',
-      },
-    ],
-  },
-  {
-    _id: '125405',
-    number: '125405',
-    name: 'JC Wood works llc',
-    status: 'active',
-    address: {
-      country: 'united states',
-      address_line_1: '1254 St. Pedro',
-      city: 'Miami',
-      state: 'Florida',
-      zipcode: '33015',
-    },
-    default_contact: {
-      name: 'Andrew Hoffman',
-      phone: '1112223333',
-      email: 'ahoffman@xyz.com',
-    },
-    contacts: [
-      {
-        name: 'Andrew Hoffman',
-        phone: '1112223333',
-        email: 'ahoffman@xyz.com',
-      },
-    ],
-  },
-  {
-    _id: '125406',
-    number: '125406',
-    name: 'Pearl jum llc',
-    status: 'active',
-    address: {
-      country: 'united states',
-      address_line_1: '1254 St. Pedro',
-      city: 'Miami',
-      state: 'Florida',
-      zipcode: '33015',
-    },
-    default_contact: {
-      name: 'Andrew Hoffman',
-      phone: '1112223333',
-      email: 'ahoffman@xyz.com',
-    },
-    contacts: [
-      {
-        name: 'Andrew Hoffman',
-        phone: '1112223333',
-        email: 'ahoffman@xyz.com',
-      },
-    ],
-  },
-  {
-    _id: '125407',
-    number: '125407',
-    name: 'Logotrix llc',
-    status: 'active',
-    address: {
-      country: 'united states',
-      address_line_1: '1254 St. Pedro',
-      city: 'Miami',
-      state: 'Florida',
-      zipcode: '33015',
-    },
-    default_contact: {
-      name: 'Andrew Hoffman',
-      phone: '1112223333',
-      email: 'ahoffman@xyz.com',
-    },
-    contacts: [
-      {
-        name: 'Andrew Hoffman',
-        phone: '1112223333',
-        email: 'ahoffman@xyz.com',
-      },
-    ],
-  },
-  {
-    _id: '125408',
-    number: '125408',
-    name: 'Mogoyo llc',
-    status: 'active',
-    address: {
-      country: 'united states',
-      address_line_1: '1254 St. Pedro',
-      city: 'Miami',
-      state: 'Florida',
-      zipcode: '33015',
-    },
-    default_contact: {
-      name: 'Andrew Hoffman',
-      phone: '1112223333',
-      email: 'ahoffman@xyz.com',
-    },
-    contacts: [
-      {
-        name: 'Andrew Hoffman',
-        phone: '1112223333',
-        email: 'ahoffman@xyz.com',
-      },
-    ],
-  },
-  {
-    _id: '125409',
-    number: '125409',
-    name: 'Mengaya Corp.',
-    status: 'active',
-    address: {
-      country: 'united states',
-      address_line_1: '1254 St. Pedro',
-      city: 'Miami',
-      state: 'Florida',
-      zipcode: '33015',
-    },
-    default_contact: {
-      name: 'Andrew Hoffman',
-      phone: '1112223333',
-      email: 'ahoffman@xyz.com',
-    },
-    contacts: [
-      {
-        name: 'Andrew Hoffman',
-        phone: '1112223333',
-        email: 'ahoffman@xyz.com',
-      },
-    ],
-  },
-  {
-    _id: '125410',
-    number: '125410',
-    name: 'UHC Centers llc',
-    status: 'active',
-    address: {
-      country: 'united states',
-      address_line_1: '1254 St. Pedro',
-      city: 'Miami',
-      state: 'Florida',
-      zipcode: '33015',
-    },
-    default_contact: {
-      name: 'Andrew Hoffman',
-      phone: '1112223333',
-      email: 'ahoffman@xyz.com',
-    },
-    contacts: [
-      {
-        name: 'Andrew Hoffman',
-        phone: '1112223333',
-        email: 'ahoffman@xyz.com',
-      },
-    ],
-  },
-  {
-    _id: '125411',
-    number: '125411',
-    name: 'Martinez Distributors llc',
-    status: 'active',
-    address: {
-      country: 'united states',
-      address_line_1: '1254 St. Pedro',
-      city: 'Miami',
-      state: 'Florida',
-      zipcode: '33015',
-    },
-    default_contact: {
-      name: 'Andrew Hoffman',
-      phone: '1112223333',
-      email: 'ahoffman@xyz.com',
-    },
-    contacts: [
-      {
-        name: 'Andrew Hoffman',
-        phone: '1112223333',
-        email: 'ahoffman@xyz.com',
-      },
-    ],
-  },
-];
-
 const __INVENTORY__: InventoryItem[] = [];
 /*
 
@@ -663,9 +404,9 @@ const genSuiteNumber = () => {
   const decition = Math.random()*100;
 
   if(decition < 70){
-    return "suite "+Math.floor(Math.random()*999);
+	return "suite "+Math.floor(Math.random()*999);
   } else {
-    return null;
+	return null;
   }
 }
 
@@ -676,44 +417,44 @@ const genPhoneNumber = ()=>{
 const genCustomers = () => {
   let objects:Customer[]
   for(let i=0; i<25;i++){
-    const  id = {_id: Math.floor(Math.random()*20200000000000)+""};
-    const name =  {name: __CUSTOMER_NAMES__[i]};
-    const address:Address = {
-      address_line_1: __ADDRESSES__[i].address_line_1,
-      address_line_2: genSuiteNumber(),
-      country: __ADDRESSES__[i].country,
-      city: __ADDRESSES__[i].city,
-      state: __ADDRESSES__[i].state,
-      zipcode: genZipcode()
-    };
-    const contact = {};
-    Object.assign(contact, __CUSTOMER_CONTACTS__[i], {phone: genPhoneNumber()});
-    const default_contact = {
-      default_contact: contact
-    };
-    const contacts = [default_contact];
-    var obj:Customer;
-    Object.assign(obj, id, name, address, default_contact, contacts);
-    objects.push(obj);
+	const  id = {id: Math.floor(Math.random()*20200000000000)+""};
+	const name =  {name: __CUSTOMER_NAMES__[i]};
+	const address:Address = {
+	  address_line_1: __ADDRESSES__[i].address_line_1,
+	  address_line_2: genSuiteNumber(),
+	  country: __ADDRESSES__[i].country,
+	  city: __ADDRESSES__[i].city,
+	  state: __ADDRESSES__[i].state,
+	  zipcode: genZipcode()
+	};
+	const contact = {};
+	Object.assign(contact, __CUSTOMER_CONTACTS__[i], {phone: genPhoneNumber()});
+	const default_contact = {
+	  default_contact: contact
+	};
+	const contacts = [default_contact];
+	var obj:Customer;
+	Object.assign(obj, id, name, address, default_contact, contacts);
+	objects.push(obj);
   }
   return objects;
 }
-*/
+
 
 const _PREPARE_CUSTOMER_LIST_ = () => {
   let res: CustomerListItem[] = [];
   for (let c of __CUSTOMERS__) {
-    res.push({
-      _id: c._id,
-      number: c.number,
-      name: c.name,
-      status: c.status,
-    });
+	res.push({
+	  id: c.id,
+	  number: c.number,
+	  name: c.name,
+	  status: c.status,
+	});
   }
 
   return res;
 };
-
+*/
 const __CUSTOMER_NAMES__ = [
   'Weber, Bins and Buckridge',
   'Carter, Ebert and Effertz',

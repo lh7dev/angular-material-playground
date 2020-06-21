@@ -26,7 +26,15 @@ export class InventoryComponent extends EntityView implements OnInit {
   }
 
   onNew(): void {
-    throw new Error('Method not implemented.');
+    const dialogRef = this.dialog.open(this.dialogNew, {
+      width: '400px',
+      disableClose: true,
+      autoFocus: false,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      this.listRef.refreshList();
+    });
   }
 
   onDelete() {

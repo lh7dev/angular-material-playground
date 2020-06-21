@@ -13,6 +13,7 @@ export class CustomerDetailsContactComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.contacts)
   }
 
 }

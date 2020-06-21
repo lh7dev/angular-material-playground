@@ -1,1 +1,4 @@
-<p>order works!</p>
+<app-entity-toolbar [title]="title" class="entity-Toolbar" showNewBtn="true" showDeleteBtn="true" showSearchBar="true"
+  (newEvent)="onNew()" (deleteEvent)="onDelete()" (searchChanged)="List.searchFor($event)">
+</app-entity-toolbar>
+<app-order-list #List (selectionChanged)="onSelectionChanged($event)" (itemSelected)="onSelect($event)"></app-order-list>

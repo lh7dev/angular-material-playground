@@ -20,7 +20,7 @@ import { Entity } from 'src/app/shared/Abstracts/shared.interfaces';
   styleUrls: ['./customer.component.scss'],
 })
 export class CustomerComponent extends EntityView implements OnInit {
-  title: string = 'Customer';
+  title: string = 'Customers';
 
   dialogNew = CustomerNewComponent;
   dialogDelete = DeleteViewComponent;

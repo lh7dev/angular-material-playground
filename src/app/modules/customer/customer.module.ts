@@ -10,6 +10,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -28,7 +29,6 @@ import { CustomerService } from './customer.service';
 import { CustomerNewComponent } from './customer-new/customer-new.component';
 import { CustomerDetailComponent } from './customer-detail/customer-detail.component';
 import { CustomerEditComponent } from './customer-edit/customer-edit.component';
-import { EntityService } from 'src/app/shared/Abstracts/entity-service.class';
 import { CustomerDetailsContactComponent } from './customer-details-contact/customer-details-contact.component';
 
 @NgModule({
@@ -53,6 +53,7 @@ import { CustomerDetailsContactComponent } from './customer-details-contact/cust
     MatDividerModule,
     MatInputModule,
     MatPaginatorModule,
+    MatProgressSpinnerModule,
     MatSortModule,
     MatTableModule,
     MatTabsModule,

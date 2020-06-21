@@ -11,7 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class ProductComponent extends EntityView implements OnInit {
 
-  title: string = 'Products & Services';
+  title: string = 'Products';
 
   dialogDelete: any;
 

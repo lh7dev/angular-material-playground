@@ -4,33 +4,66 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { EntityDetails } from 'src/app/shared/Abstracts/entity-details.class';
 import { CustomerService } from '../customer.service';
 import { Customer } from 'src/app/shared/Abstracts/customer.interface';
+import { NextAction } from 'src/app/shared/Abstracts/entity-view.class';
 
 @Component({
   selector: 'app-customer-detail',
   templateUrl: './customer-detail.component.html',
-  styleUrls: ['./customer-detail.component.scss']
+  styleUrls: ['./customer-detail.component.scss'],
 })
-export class CustomerDetailComponent extends EntityDetails implements OnInit {
-  detailsComponent: any;
+export class CustomerDetailComponent implements OnInit {
+  entity: Customer | null;
 
-  contacts: Contact[] | null;
+  private loading: boolean = true;
+
+  contacts: Contact[] = [];
 
   constructor(
-    private cutomerService: CustomerService,
+    private service: CustomerService,
     public dialogRef: MatDialogRef<any>,
     @Inject(MAT_DIALOG_DATA) public data: Entity
-  ) {
-    super(cutomerService, dialogRef, data);
-  }
+  ) {}
 
   ngOnInit(): void {
-    console.log("trace ngOnInit");
-    this.setEntity(this.data);
-    console.log(this.entity);
-    console.log(<Customer>this.entity);
-
-    const customer: Customer = <Customer> this.entity;
-    this.contacts = customer.contacts;
+    this.entity = <Customer>this.data;
+    this.refreshData();
   }
 
+  refreshData(): void {
+    this.loading = true;
+    this.service.getDetails({ id: this.data.id }).subscribe((result) => {
+      if (result.success == true) {
+        this.entity = <Customer>result.data[0];
+        this.contacts = this.entity.contacts;
+        this.loading = false;
+      } else {
+        this.service.notify('ERROR: could not reach the server');
+        this.loading = false;
+        this.dialogRef.close();
+      }
+    });
+  }
+
+  dialogClose(): void {
+    const next: NextAction = {
+      next: null,
+    };
+
+    this.dialogRef.close(next);
+  }
+
+  //public abstract editItem(): void; // ← close, then open edit component | trigger stub.
+
+  openEdit(): void {
+    const next: NextAction = {
+      next: 'open-edit',
+      entity: this.entity,
+    };
+
+    this.dialogRef.close(next);
+  }
+
+  get isLoading(): boolean {
+    return this.loading;
+  }
 }

@@ -2,6 +2,8 @@ import { Component, OnInit, AfterViewInit, ViewChild, Input } from '@angular/cor
 import { CustomerService } from '../customer.service';
 import { ListView } from 'src/app/shared/Abstracts/entity-list.class';
 import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-customer-list',
@@ -10,12 +12,13 @@ import { MatSort } from '@angular/material/sort';
 })
 export class CustomerListComponent extends ListView implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ["select", 'number', 'name', 'status'];
+  desktopDisplayedColumns = ["select", 'number', 'name', 'status'];
+  handsetDisplayedColumns = this.desktopDisplayedColumns;
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
-  constructor(private service: CustomerService) {
-    super(service);
+  constructor(private service: CustomerService, bpo: BreakpointObserver) {
+    super(service, bpo);
   }
 
   ngOnInit(): void {

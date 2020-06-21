@@ -1,0 +1,48 @@
+.td-text,
+.th-text {
+  padding: 0 10px;
+}
+.td-text {
+  padding: 15px;
+}
+
+.list-checkbox-td {
+  width: 60px;
+}
+
+.list-name-td {
+  min-width: 130px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.list-sku-td {
+  max-width: 80px;
+}
+
+.list-type-td {
+  max-width: 80px;
+}
+
+.list-price-td {
+  width: 15%;
+  min-width: 100px;
+}
+
+.list-status-td {
+  width: 8%;
+  min-width: 50px;
+}
+
+.loading-spinner-wrap {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.35);
+}

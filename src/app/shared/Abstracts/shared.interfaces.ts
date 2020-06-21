@@ -13,7 +13,7 @@ export interface Address {
 }
 
 export interface Entity {
-  _id: string;
+  id: string;
   name?: string;
 }
 
@@ -54,7 +54,9 @@ export interface Deletable {
 export interface iEntityListView {
   // table fields
   dataSource: MatTableDataSource<Entity>;
-  displayedColumns: string[];
+  handsetDisplayedColumns: string[];
+  desktopDisplayedColumns: string[];
+
   selection: SelectionModel<Entity>;
 
   // paginator fields

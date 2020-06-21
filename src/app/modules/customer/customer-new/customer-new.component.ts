@@ -57,7 +57,7 @@ export class CustomerNewComponent extends EntityNew implements OnInit {
     };
 
     return {
-      _id: null,
+      id: null,
       number: null,
       name: fd.name,
       status: fd.status,

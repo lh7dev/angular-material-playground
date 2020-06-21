@@ -4,7 +4,7 @@
     <span class='etb-title' *ngIf="title != null">{{title}}</span>
 
     <div fxFlex fxLayout="row" fxLayoutAlign="flex-end">
-      <mat-form-field class="example-form-field" *ngIf="showSearchBar">
+      <mat-form-field class="example-form-field" *ngIf="showSearchBar && !(isHandset$ | async)">
         <input #searchField matInput type="text" placeholder="Search" class="search-field"
           (keyup)="onSearchChaged(searchField.value)" (change)="onSearchChaged(searchField.value)">
         <button mat-button *ngIf="searchField.value" matSuffix mat-icon-button aria-label="Clear"
@@ -27,5 +27,15 @@
       </ul>
     </div>
 
+  </mat-toolbar-row>
+  <mat-toolbar-row *ngIf="showSearchBar && (isHandset$ | async)">
+    <mat-form-field class="example-form-field" *ngIf="showSearchBar">
+      <input #searchField matInput type="text" placeholder="Search" class="search-field"
+        (keyup)="onSearchChaged(searchField.value)" (change)="onSearchChaged(searchField.value)">
+      <button mat-button *ngIf="searchField.value" matSuffix mat-icon-button aria-label="Clear"
+        (click)="searchField.value=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
   </mat-toolbar-row>
 </mat-toolbar>

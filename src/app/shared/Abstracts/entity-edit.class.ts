@@ -31,7 +31,7 @@ export abstract class EntityEdit {
   }
 
   setEntity(entity:Entity) {
-    this.editService.getDetails({_id: this.entityData._id}).subscribe(
+    this.editService.getDetails({id: this.entityData.id}).subscribe(
       result=>{
         if(result.success == true){
           console.log("trace");

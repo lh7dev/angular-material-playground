@@ -1,4 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-entity-toolbar',
@@ -16,7 +19,12 @@ export class EntityToolbarComponent implements OnInit {
   @Output() deleteEvent = new EventEmitter<any>();
   @Output() searchChanged = new EventEmitter<string>();
 
-  constructor() { }
+  isHandset$: Observable<boolean> = this.bpo.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => result.matches)
+    );
+
+  constructor(private bpo:BreakpointObserver) { }
 
   ngOnInit(): void {
   }

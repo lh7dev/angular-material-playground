@@ -1,7 +1,13 @@
 <app-header (onSidebarToggle)="sidebar.toggle()"></app-header>
 <mat-drawer-container>
-  <mat-drawer #sidebar mode="side" opened (openedChange)="resizeElements($event)">
-    <app-sidebar></app-sidebar>
+  <mat-drawer
+  #sidebar
+  (openedChange)="resizeElements($event)"
+  fixedInViewport="(isHandset$ | async) ? 'true' : 'false'"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) ? 'false' : ViewStateService.IsMenuOpen">
+    <app-sidebar (navigation)="autoClose(sidebar)"></app-sidebar>
   </mat-drawer>
   <mat-drawer-content>
     <router-outlet></router-outlet>

@@ -8,8 +8,9 @@
 
 <br>
 
-<div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px" class="stats-cards">
-  <mat-card fxFlex="24" *ngFor="let card of widgetCards">
+<div fxLayout="(isHandset$ | async) ? column : row" fxLayoutAlign="space-between center" fxLayoutGap="20px"
+  class="stats-cards">
+  <mat-card fxFlex="(isHandset$ | async) ? 100 : 24" *ngFor="let card of widgetCards" class="card-xyz">
     <app-widget-card [cardData]="card"></app-widget-card>
   </mat-card>
 </div>
@@ -21,7 +22,9 @@
 <br>
 
 <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
-  <div fxFlex="60"><app-widget-table [tableData]="tableWidgetData"></app-widget-table></div>
+  <div fxFlex="60">
+    <app-widget-table [tableData]="tableWidgetData"></app-widget-table>
+  </div>
   <div fxFlex="40">
     <app-widget-pie [widgetPieData]="pieWidgetData"></app-widget-pie>
   </div>

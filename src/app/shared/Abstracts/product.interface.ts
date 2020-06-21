@@ -13,5 +13,15 @@ export interface ProductListItem extends Entity {
 export interface ProductType {
   type: string;
   soldBy: string;
-  unit: string;
+}
+
+export interface Product extends Entity {
+  sku: string;
+  name: string;
+  status: string;
+  type: ProductType;
+  price: number;
+  features?: object[];
+  description?: string;
+  category?: string;
 }
