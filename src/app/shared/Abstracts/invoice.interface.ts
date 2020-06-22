@@ -1,6 +1,6 @@
 import { Address, Entity, Contact } from './shared.interfaces';
 import { Product } from './product.interface';
-import { Business } from './business,interface';
+import { Business } from './business.interface';
 import { Customer } from './customer.interface';
 import { Order } from './order.interface';
 

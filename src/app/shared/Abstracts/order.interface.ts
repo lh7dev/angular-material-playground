@@ -1,6 +1,6 @@
 import { Address, Entity, Contact } from './shared.interfaces';
 import { Product } from './product.interface';
-import { Business } from './business,interface';
+import { Business } from './business.interface';
 import { Customer } from './customer.interface';
 
 export interface OrderListItem extends Entity {
@@ -14,18 +14,20 @@ export interface OrderListItem extends Entity {
 export interface Order extends Entity {
   number: string;
   shipping_address: Address;
-  customer: string;
+  customer: Customer;
   business: Business;
   status: string;
-  products: Product[];
+  charges: Charge[];
   total: number;
+  date_created: Date;
+  date_fulfilled?: Date;
 }
 
 export interface EditOrderFormData {
   shipping_address: Address;
   customer: Customer;
   status: string;
-  products: Product[];
+  charges: Charge[];
   total: number;
 }
 
@@ -33,6 +35,12 @@ export interface NewOrderFormData {
   shipping_address: Address;
   customer: Customer;
   status: string;
-  products: Product[];
+  charges: Charge[];
+  total: number;
+}
+
+export interface Charge {
+  product: Product;
+  count: number;
   total: number;
 }

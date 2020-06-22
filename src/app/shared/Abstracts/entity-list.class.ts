@@ -42,7 +42,9 @@ export abstract class ListView {
   constructor(
     private entityService: iEntityService,
     private breakpointObserver: BreakpointObserver
-  ) {}
+  ) {
+
+  }
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
@@ -95,23 +97,7 @@ export abstract class ListView {
   get isLoading(): boolean {
     return this.loading;
   }
-  /*
-  refreshList(): void {
-    console.log('refreshing list');
-    this.entityService.getList().subscribe((response) => {
-      console.log('list response');
-      console.log(response);
-      if (response.success) {
-        this.dataSource = new MatTableDataSource<Entity>(response.data.data);
-        this.initSelectionModel();
-        this.initPaginators();
-      } else {
-        console.log('refresh list failed');
-        console.log(response);
-      }
-    });
-  }
- */
+
   //must be called after view inits
   initSelectionModel(): void {
     this.length = this.dataSource.data.length;

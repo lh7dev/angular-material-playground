@@ -37,6 +37,7 @@ import { EntityService } from './Abstracts/entity-service.class';
 import { PhonePipe } from './directives/phone-pipe.directive';
 import { ViewStateService } from './services/view-state.service';
 import { BusinessService } from './services/business.service';
+import { AddressFormatComponent } from './components/address-format/address-format.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { BusinessService } from './services/business.service';
     TableComponent,
     EntityToolbarComponent,
     DeleteViewComponent,
-    PhonePipe
+    PhonePipe,
+    AddressFormatComponent
   ],
   imports: [
     CommonModule,
@@ -83,7 +85,8 @@ import { BusinessService } from './services/business.service';
     TableComponent,
     EntityToolbarComponent,
     DeleteViewComponent,
-    PhonePipe
+    PhonePipe,
+    AddressFormatComponent
   ],
 
   providers: [AuthService, DummyDataService, ViewStateService, BusinessService],

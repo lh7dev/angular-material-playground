@@ -16,6 +16,7 @@ import { CustomerListItem, Customer } from '../Abstracts/customer.interface';
 import { ProductListItem, Product } from '../Abstracts/product.interface';
 
 import { HttpClient } from '@angular/common/http';
+import { Order, OrderListItem } from '../Abstracts/order.interface';
 // TEST DATA
 
 @Injectable({
@@ -40,6 +41,10 @@ export class DummyDataService {
 
   get PRODUCTS(): Observable<Product[]> {
     return <Observable<Product[]>>this.TestData('PRODUCTS');
+  }
+
+  get ORDERS(): Observable<Order[]> {
+    return <Observable<Order[]>>this.TestData('ORDERS');
   }
 
   constructor(private http: HttpClient) {}
@@ -122,6 +127,49 @@ export class DummyDataService {
         console.log(result);
         const packagedResponse = this.toApiResponse(true, null, listViewData);
         observer.next(packagedResponse);
+      });
+    });
+  }
+
+  private toOrderListItemList(data: Order[]): OrderListItem[] {
+    var res = data.map((x) => {
+      var item: OrderListItem = {
+        id: x.id,
+        number: x.number,
+        customer: x.customer.name,
+        status: x.status,
+        created_on: x.date_created.toString(),
+        total: x.total
+      };
+
+      return item;
+
+    });
+    return res;
+  }
+
+  orderList(): Observable<ApiResponse> {
+    return new Observable<ApiResponse>((observer) => {
+      this.ORDERS.subscribe((result) => {
+        const list: OrderListItem[] = this.toOrderListItemList(result);
+        const listViewData: EntityListData = this.toEntityListData(list);
+        console.log(result);
+        const packagedResponse = this.toApiResponse(true, null, listViewData);
+        observer.next(packagedResponse);
+      });
+    });
+  }
+
+  orderDetails(data: Entity): Observable<ApiResponse> {
+    return new Observable<ApiResponse>((observer) => {
+      console.log('sending data... not really');
+      this.ORDERS.subscribe((result) => {
+        const order = result.filter((x) => {
+          if (x.id == data.id) {
+            return x;
+          }
+        });
+        observer.next(this.toApiResponse(true, null, order));
       });
     });
   }

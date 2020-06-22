@@ -1,4 +1,4 @@
-import { Address } from 'cluster';
+import { Address } from './shared.interfaces';
 
 export interface Business {
   name: string;

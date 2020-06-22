@@ -19,11 +19,11 @@ export class OrderService extends EntityService {
       super(httpService, authService, dummyDataService, snackbarService);
   }
   getList(){
-    return this.dummyDataService.customerList();
+    return this.dummyDataService.orderList();
   }
 
   getDetails(data: Entity): Observable<ApiResponse>{
-    return this.dummyDataService.customerDetails(data);
+    return this.dummyDataService.orderDetails(data);
   }
 
   applyNew(data):Observable<ApiResponse>{

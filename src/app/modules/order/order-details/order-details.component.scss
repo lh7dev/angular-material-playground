@@ -1,0 +1,39 @@
+th {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+td {
+  padding: 10px;
+}
+
+table {
+  width: 100%;
+}
+
+.total-wrap {
+  width: 100%;
+}
+
+.totals {
+  float: right;
+  padding: 20px;
+  *{
+    font-size: 1.15rem;
+  }
+
+}
+
+.grand-total {
+  * {
+    font-size: 1.3rem;
+    font-weight: 500;
+  }
+}
+
+.actions {
+  padding-top: 15px;
+  *{
+    margin-right: 20px;
+  }
+}

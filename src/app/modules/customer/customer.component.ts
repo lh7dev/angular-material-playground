@@ -1,5 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { EntityView, NextAction } from 'src/app/shared/Abstracts/entity-view.class';
+import {
+  EntityView,
+  NextAction,
+} from 'src/app/shared/Abstracts/entity-view.class';
 import { MatDialog } from '@angular/material/dialog';
 import { CustomerNewComponent } from './customer-new/customer-new.component';
 import { CustomerListComponent } from './customer-list/customer-list.component';
@@ -11,7 +14,6 @@ import {
 import { CustomerDetailComponent } from './customer-detail/customer-detail.component';
 import { CustomerEditComponent } from './customer-edit/customer-edit.component';
 import { CustomerService } from './customer.service';
-import { ThrowStmt } from '@angular/compiler';
 import { Entity } from 'src/app/shared/Abstracts/shared.interfaces';
 
 @Component({
@@ -32,8 +34,6 @@ export class CustomerComponent extends EntityView implements OnInit {
   constructor(private dialog: MatDialog, private service: CustomerService) {
     super(dialog);
   }
-
-  ngOnInit(): void {}
 
   onNew() {
     const dialogRef = this.dialog.open(this.dialogNew, {
@@ -101,18 +101,18 @@ export class CustomerComponent extends EntityView implements OnInit {
       data: e,
     });
 
-    dialogRef
-      .afterClosed()
-      .subscribe((result: NextAction) => {
-        console.log(result);
-        switch (result.next) {
-          case 'open-edit':
-            this.onOpenEdit(result.entity);
-            break;
-          default:
-            this.listRef.refreshList();
-            break;
-        }
-      });
+    dialogRef.afterClosed().subscribe((result: NextAction) => {
+      console.log(result);
+      switch (result.next) {
+        case 'open-edit':
+          this.onOpenEdit(result.entity);
+          break;
+        default:
+          this.listRef.refreshList();
+          break;
+      }
+    });
   }
+
+  ngOnInit(): void {}
 }

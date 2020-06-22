@@ -1,7 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Entity, Contact } from 'src/app/shared/Abstracts/shared.interfaces';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { EntityDetails } from 'src/app/shared/Abstracts/entity-details.class';
 import { CustomerService } from '../customer.service';
 import { Customer } from 'src/app/shared/Abstracts/customer.interface';
 import { NextAction } from 'src/app/shared/Abstracts/entity-view.class';
