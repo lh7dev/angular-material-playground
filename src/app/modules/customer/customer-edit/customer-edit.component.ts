@@ -14,7 +14,6 @@ import { NextAction } from 'src/app/shared/Abstracts/entity-view.class';
   templateUrl: './customer-edit.component.html',
   styleUrls: ['./customer-edit.component.scss'],
 })
-
 export class CustomerEditComponent implements OnInit {
   entity: Customer | null;
   form: FormGroup = new FormGroup({});
@@ -94,8 +93,60 @@ export class CustomerEditComponent implements OnInit {
       this.entity.contacts.push(this.contactForm.value);
       this.service.applyEdit(this.entity).subscribe((result) => {
         if (result.success) {
-          //this.entity = result.data;
           this.contactForm.reset();
+          this.service.notify('Action has not been implemented');
+        } else {
+          this.service.notify('item could not be updated');
+        }
+      });
+    } else {
+      console.log('form is invalid, showing notification');
+      for (let fc of Object.keys(this.form.controls)) {
+        console.log(fc + ' is ' + this.form.controls[fc].status);
+        if (this.form.controls[fc].status === 'INVALID') {
+          console.log(this.form.controls[fc].errors);
+        }
+      }
+      console.log(this.form);
+    }
+  }
+
+  refreshData() {
+    this.loading = true;
+    this.service.getDetails({ id: this.data.id }).subscribe((result) => {
+      if (result.success === true) {
+        this.entity = result.data[0] as Customer;
+        this.contacts = this.entity.contacts;
+        this.initForm();
+      } else {
+        this.service.notify('ERROR: could not reach the server');
+        this.loading = false;
+        this.ref.close();
+      }
+    });
+  }
+
+  get isLoading(): boolean {
+    return this.loading;
+  }
+
+  cancel() {
+    const next: NextAction = {
+      next: 'open-details',
+      entity: this.entity,
+    };
+
+    this.ref.close(next);
+  }
+
+  //public abstract editItem(): void; // ← close, then open edit component | trigger stub.
+
+  applyEdit(): void {
+    if (this.form.valid) {
+      console.log('form is valid, should send values');
+      let formatedData = this.formatData(this.form.value);
+      this.service.applyEdit(this.entity).subscribe((result) => {
+        if (result.success) {
           this.service.notify('Action has not been implemented');
         } else {
           this.service.notify('item could not be updated');
@@ -113,65 +164,10 @@ export class CustomerEditComponent implements OnInit {
       }
       console.log(this.form);
     }
-  }
-
-  refreshData() {
-    this.loading = true;
-    this.service.getDetails({ id: this.data.id }).subscribe((result) => {
-      if (result.success == true) {
-        this.entity = <Customer>result.data[0];
-        this.contacts = this.entity.contacts;
-        this.initForm();
-      } else {
-        this.service.notify('ERROR: could not reach the server');
-        this.loading = false;
-        this.ref.close();
-      }
-    });
-  }
-
-  get isLoading():boolean {
-    return this.loading;
-  }
-
-  cancel(){
-    const next: NextAction = {
-      next: "open-details",
-      entity: this.ref    };
-
-    this.ref.close(next);
-  }
-
-  //public abstract editItem(): void; // ← close, then open edit component | trigger stub.
-
-  applyEdit(): void {
-    if (this.form.valid){
-      console.log('form is valid, should send values');
-      var formatedData = this.formatData(this.form.value);
-      this.service.applyEdit(this.entity).subscribe(result => {
-        if(result.success){
-          this.service.notify("Action has not been implemented");
-        } else {
-          this.service.notify("item could not be updated");
-        }
-      });
-    } else {
-      console.log('form is invalid, showing notification');
-      for (let fc of Object.keys(this.form.controls)) {
-        console.log(fc+" is "+this.form.controls[fc].status)
-        if(this.form.controls[fc].status == "INVALID") {
-          console.log(this.form.controls[fc].errors);
-        }
-
-        //console.log(this.form.controls[fc]);
-      }
-      console.log(this.form);
-    }
-
 
     const next: NextAction = {
-      next: "open-details",
-      entity: this.entity
+      next: 'open-details',
+      entity: this.entity,
     };
 
     this.ref.close(next);

@@ -1,0 +1,13 @@
+@import "main";
+
+form {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+  section,
+  input,
+  textarea,
+  select {
+    width: 100%;
+  }
+}

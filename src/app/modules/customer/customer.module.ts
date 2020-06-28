@@ -10,12 +10,12 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 
-//App Modules
+// App Modules
 import { CustomerRoutingModule } from './customer-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 
@@ -58,16 +58,14 @@ import { CustomerDetailsContactComponent } from './customer-details-contact/cust
     MatTableModule,
     MatTabsModule,
     // App Modules
-    SharedModule
+    SharedModule,
   ],
-  providers: [
-    CustomerService
-  ],
+  providers: [CustomerService],
   entryComponents: [
     CustomerNewComponent,
     DeleteViewComponent,
     CustomerDetailComponent,
-    CustomerEditComponent
-  ]
+    CustomerEditComponent,
+  ],
 })
-export class CustomerModule { }
+export class CustomerModule {}

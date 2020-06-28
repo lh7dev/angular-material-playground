@@ -43,7 +43,7 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="DisplayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: DisplayedColumns;" class="list-item"></tr>
+    <tr mat-row *matRowDef="let row; columns: DisplayedColumns;" class="list-item" (click)="selectItem(row)"></tr>
   </table>
 
   <mat-paginator (page)='onPageChange($event)' [length]='length' [pageSize]='pageSize'

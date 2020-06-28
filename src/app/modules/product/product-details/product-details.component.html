@@ -1,1 +1,41 @@
-<p>product-details works!</p>
+<div class="header-section">
+  <h2>Product Details</h2>
+</div>
+
+<mat-dialog-content>
+  <div class="loading-spinner-wrap" *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <div class="overview-section" *ngIf="!isLoading">
+    <label for="eSKU">SKU:</label>
+    <h3 #eSKU>{{ entity.sku | uppercase }}</h3>
+
+    <label for="eName">Product Name:</label>
+    <h3 #eName>{{ entity.name | uppercase }}</h3>
+
+    <label for="eDescription">Description:</label>
+    <h3 #eDescription>{{ entity.description }}</h3>
+
+    <label for="eStatus">Status:</label>
+    <h3 #eStatus>{{ entity.status }}</h3>
+
+    <label for="eType">Product Type:</label>
+    <h3 #eType>{{ entity.type.type }}</h3>
+
+    <label for="eSoldBy">Sold By:</label>
+    <h3 #eSoldBy>{{ entity.type.soldBy }}</h3>
+
+    <label for="ePrice">Price:</label>
+    <h3 #ePrice>{{ entity.price | currency }}</h3>
+
+    <mat-divider></mat-divider>
+  </div>
+</mat-dialog-content>
+
+<div class="actions">
+  <button mat-raised-button color="primary" type="button" (click)="openEdit()">
+    Edit
+  </button>
+  <button mat-raised-button type="button" (click)="dialogClose()">Close</button>
+</div>

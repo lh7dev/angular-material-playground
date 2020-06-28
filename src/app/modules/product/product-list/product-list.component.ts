@@ -33,7 +33,5 @@ export class ProductListComponent extends ListView
     this.refreshList();
   }
 
-  ngAfterViewInit() {
-    //this.initPaginators();
-  }
+  ngAfterViewInit() {}
 }

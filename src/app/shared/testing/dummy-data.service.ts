@@ -23,7 +23,6 @@ import { Order, OrderListItem } from '../Abstracts/order.interface';
   providedIn: 'root',
 })
 export class DummyDataService {
-
   private TestData(xDataKey): Observable<any> {
     return new Observable<any>((observer) => {
       const fileName = 'test-data';
@@ -92,17 +91,21 @@ export class DummyDataService {
 
   customerDelete(data: Entity): Observable<ApiResponse> {
     return new Observable<ApiResponse>((observer) => {
-      observer.next(this.toApiResponse(false, "Delete action hasn't been implemented"));
+      observer.next(
+        this.toApiResponse(false, "Delete action hasn't been implemented")
+      );
     });
   }
 
   customerEdit(data: Entity): Observable<ApiResponse> {
     return new Observable<ApiResponse>((observer) => {
-      observer.next(this.toApiResponse(false, "Delete action hasn't been implemented", data));
+      observer.next(
+        this.toApiResponse(false, "Delete action hasn't been implemented", data)
+      );
     });
   }
 
-  private toProductListItemList(data: Product[]):ProductListItem[] {
+  private toProductListItemList(data: Product[]): ProductListItem[] {
     var res = data.map((x) => {
       var item: ProductListItem = {
         id: x.id,
@@ -110,7 +113,7 @@ export class DummyDataService {
         name: x.name,
         status: x.status,
         type: x.type.type,
-        price: x.price
+        price: x.price,
       };
       return item;
     });
@@ -131,6 +134,20 @@ export class DummyDataService {
     });
   }
 
+  productDetails(data: Entity): Observable<ApiResponse> {
+    return new Observable<ApiResponse>((observer) => {
+      console.log('sending data... not really');
+      this.PRODUCTS.subscribe((result) => {
+        const product = result.filter((x) => {
+          if (x.id === data.id) {
+            return x;
+          }
+        });
+        observer.next(this.toApiResponse(true, null, product));
+      });
+    });
+  }
+
   private toOrderListItemList(data: Order[]): OrderListItem[] {
     var res = data.map((x) => {
       var item: OrderListItem = {
@@ -139,11 +156,10 @@ export class DummyDataService {
         customer: x.customer.name,
         status: x.status,
         created_on: x.date_created.toString(),
-        total: x.total
+        total: x.total,
       };
 
       return item;
-
     });
     return res;
   }
@@ -192,7 +208,7 @@ export class DummyDataService {
 
   private toEntityListData(data: Entity[]) {
     return {
-      data: data,
+      data,
       total: data.length,
     };
   }
@@ -203,9 +219,9 @@ export class DummyDataService {
     data?: any
   ): ApiResponse {
     return {
-      success: success,
-      message: message,
-      data: data,
+      success,
+      message,
+      data,
     };
   }
 }
@@ -214,7 +230,7 @@ export class DummyDataService {
 
 const __APPLY_NEW_RESPONSE__ = {
   success: true,
-  message: 'Customer created successfully',
+  message: 'Item created successfully',
 };
 
 // dummy inventory list

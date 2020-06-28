@@ -25,7 +25,7 @@ export abstract class EntityNew {
   onFormSubmit() {
     if (this.form.valid) {
       console.log('form is valid, should send values');
-      var formatedData = this.formatData(this.form.value);
+      const formatedData = this.formatData(this.form.value);
       this.service.applyNew(formatedData).subscribe((result) => {
         // handle errors from backend
         if (!result.success) {
@@ -37,13 +37,11 @@ export abstract class EntityNew {
       });
     } else {
       console.log('form is invalid, showing notification');
-      for (let fc of Object.keys(this.form.controls)) {
-        console.log(fc+" is "+this.form.controls[fc].status)
-        if(this.form.controls[fc].status == "INVALID") {
+      for (const fc of Object.keys(this.form.controls)) {
+        console.log(fc + ' is ' + this.form.controls[fc].status);
+        if (this.form.controls[fc].status === 'INVALID') {
           console.log(this.form.controls[fc].errors);
         }
-
-        //console.log(this.form.controls[fc]);
       }
       console.log(this.form);
       this.service.notify('The form is not valid');

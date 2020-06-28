@@ -25,3 +25,15 @@ export interface Product extends Entity {
   description?: string;
   category?: string;
 }
+
+export interface NewProductFormData extends Entity {
+  sku: string;
+  name: string;
+  status: string;
+  type: string;
+  soldBy: string;
+  price: number;
+  features?: object[];
+  description?: string;
+  category?: string;
+}

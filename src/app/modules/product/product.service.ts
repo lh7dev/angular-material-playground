@@ -32,6 +32,14 @@ export class ProductService extends EntityService {
   getList(): Observable<ApiResponse> {
     return this.dummyDataService.productList();
   }
+
+  getDetails(data: Entity): Observable<ApiResponse> {
+    return this.dummyDataService.productDetails(data);
+  }
+
+  applyNew(formData: object): Observable<ApiResponse> {
+    return this.dummyDataService.applyNew(formData);
+  }
 }
 
 // API ENDPOINT
