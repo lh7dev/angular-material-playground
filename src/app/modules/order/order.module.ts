@@ -4,13 +4,16 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // Material Modules
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -27,10 +30,17 @@ import { OrderEditComponent } from './order-edit/order-edit.component';
 import { OrderDetailsComponent } from './order-details/order-details.component';
 import { DeleteViewComponent } from 'src/app/shared/components/delete-view/delete-view.component';
 import { OrderService } from './order.service';
-
+import { CustomerService } from '../customer/customer.service';
+import { ProductService } from '../product/product.service';
 
 @NgModule({
-  declarations: [OrderComponent, OrderListComponent, OrderNewComponent, OrderEditComponent, OrderDetailsComponent],
+  declarations: [
+    OrderComponent,
+    OrderListComponent,
+    OrderNewComponent,
+    OrderEditComponent,
+    OrderDetailsComponent,
+  ],
   imports: [
     CommonModule,
     OrderRoutingModule,
@@ -38,6 +48,7 @@ import { OrderService } from './order.service';
     FormsModule,
     ReactiveFormsModule,
     // Material Modules
+    MatAutocompleteModule,
     MatButtonModule,
     MatCheckboxModule,
     MatDialogModule,
@@ -45,18 +56,20 @@ import { OrderService } from './order.service';
     MatInputModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
+    MatSelectModule,
+    MatSlideToggleModule,
     MatSortModule,
     MatTableModule,
     MatTabsModule,
     // App Modules
-    SharedModule
+    SharedModule,
   ],
-  providers: [OrderService],
+  providers: [OrderService, CustomerService, ProductService],
   entryComponents: [
     OrderNewComponent,
     DeleteViewComponent,
     OrderDetailsComponent,
-    OrderEditComponent
-  ]
+    OrderEditComponent,
+  ],
 })
-export class OrderModule { }
+export class OrderModule {}

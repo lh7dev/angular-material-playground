@@ -32,11 +32,12 @@ export interface EditOrderFormData {
 }
 
 export interface NewOrderFormData {
-  shipping_address: Address;
+  vendor: Business;
+  isForShipping: boolean;
+  shipping_address?: Address;
   customer: Customer;
-  status: string;
   charges: Charge[];
-  total: number;
+  notes: string;
 }
 
 export interface Charge {

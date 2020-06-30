@@ -19,7 +19,7 @@ export abstract class EntityService implements iEntityService {
     private http: HttpClient,
     private auth: AuthService,
     private dummyData: DummyDataService,
-    private snackbar: MatSnackBar,
+    private snackbar: MatSnackBar
   ) {}
 
   getList(): Observable<ApiResponse> {
@@ -30,9 +30,15 @@ export abstract class EntityService implements iEntityService {
     return this.http.get<ApiResponse>(url, { headers: authHeader });
   }
 
-  getDetails(
-    entity: Entity
-  ): Observable<ApiResponse> {
+  getAvailables(): Observable<ApiResponse> {
+    const url = this.backendUrl + this.endpoints.available;
+    //return this.http.get<any>(url);
+    console.log('requesting products list from: ' + url);
+    const authHeader = this.auth.getAuthHeader();
+    return this.http.get<ApiResponse>(url, { headers: authHeader });
+  }
+
+  getDetails(entity: Entity): Observable<ApiResponse> {
     const url = this.backendUrl + this.endpoints.details;
     //return this.http.get<any>(url);
     console.log('requesting products list from: ' + url);

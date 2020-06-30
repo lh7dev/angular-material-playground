@@ -1,1 +1,375 @@
-<p>order-new works!</p>
+<div class="header-section">
+  <h2>New Order</h2>
+</div>
+
+<mat-dialog-content>
+  <div class="loading-spinner-wrap" *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <div class="Order-wrap" *ngIf="!isLoading">
+    <section class="parties">
+      <!-- Vendor Info -->
+      <div class="vendor-wrap">
+        <label for="eVendor">Vendor:</label>
+        <h3 #eVendor class="vendor-name">{{ business.name | uppercase }}</h3>
+        <app-address-format [address]="business.address"></app-address-format>
+        <br />
+        <p class="contact-info">
+          {{ business.phone | phone }} <br />
+          {{ business.email }}
+        </p>
+      </div>
+
+      <!-- Customer Info -->
+      <div class="customer-wrap">
+        <div class="customer-info" *ngIf="isCustomerSelected">
+          <label for="custName">Customer:</label>
+          <h3 #custName class="customer-name">
+            {{ selectedCustomer.name | uppercase }}
+          </h3>
+          <app-address-format
+            #vAddress
+            [address]="selectedCustomer.address"
+          ></app-address-format>
+          <br />
+          <p class="contact-info">
+            {{ selectedCustomer.default_contact.phone | phone }} <br />
+            {{ selectedCustomer.default_contact.email }}
+          </p>
+        </div>
+      </div>
+
+      <br />
+
+      <mat-divider></mat-divider>
+    </section>
+
+    <br />
+
+    <!-- Customer selector -->
+    <mat-form-field class="example-full-width">
+      <input
+        type="text"
+        matInput
+        placeholder="Select a Customer"
+        aria-label="Customer"
+        [matAutocomplete]="autoCustomer"
+        [formControl]="selectedCustomerCtrl"
+        required
+      />
+      <mat-autocomplete #autoCustomer="matAutocomplete">
+        <mat-option
+          *ngFor="let ac of autocompleteFilteredCustomer | async"
+          [value]="ac.name"
+        >
+          <span>{{ ac.name }}</span> |
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <br />
+    <mat-divider></mat-divider>
+    <br />
+    <!-- Shipping Info -->
+    <h2>Shipping Information</h2>
+    <div *ngIf="isCustomerSelected">
+      <mat-checkbox
+        [checked]="useDefaultShipping"
+        (change)="changeShippingAddressSetting()"
+      >
+        Use default shipping address</mat-checkbox
+      >
+
+      <br /><br />
+
+      <div
+        class="default-shipping-address"
+        *ngIf="useDefaultShipping && isCustomerSelected"
+      >
+        <label for="shAddress">Shipping Address:</label>
+        <br />
+        <app-address-format
+          #shAddress
+          [address]="selectedCustomer.address"
+        ></app-address-format>
+      </div>
+
+      <!-- Custom Shipping Address Form -->
+      <div class="shipping-address-wrap" *ngIf="!useDefaultShipping">
+        <form [formGroup]="shippingAddressForm">
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="Address line 1"
+              type="text"
+              min="5"
+              formControlName="address_line_1"
+              required
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="Address line 2"
+              type="text"
+              formControlName="address_line_1"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="City"
+              type="text"
+              min="3"
+              formControlName="city"
+              required
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="State"
+              type="text"
+              min="3"
+              formControlName="state"
+              required
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="Zip Code"
+              type="text"
+              formControlName="zipcode"
+              required
+            />
+          </mat-form-field>
+        </form>
+      </div>
+    </div>
+    <br />
+    <mat-divider></mat-divider>
+
+    <br />
+
+    <!-- Charges Template -->
+    <h2>Products</h2>
+
+    <div class="new-charge-line">
+      <form [formGroup]="addChargeForm" (ngSubmit)="addCharge()">
+        <mat-form-field>
+          <input
+            type="text"
+            matInput
+            placeholder="Product"
+            aria-label="Product"
+            [matAutocomplete]="autoProducts"
+            [formControl]="selectedProductCtrl"
+            required
+          />
+          <mat-autocomplete #autoProducts="matAutocomplete">
+            <mat-option
+              *ngFor="let ap of autocompleteFilteredProduct | async"
+              [value]="ap.name"
+            >
+              <span>{{ ap.name }}</span> |
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="Qty"
+            type="number"
+            autocomplete="off"
+            [formControl]="productCountCtrl"
+            required
+          />
+        </mat-form-field>
+        <label>{{ (totalNewCharge ? totalNewCharge : 0) | currency }}</label>
+        <button mat-raised-button color="accent" type="submit">
+          Add to order
+        </button>
+      </form>
+    </div>
+
+    <br />
+
+    <div class="charges full-width">
+      <table
+        mat-table
+        [dataSource]="charges"
+        class="mat-elevation-z8 full-width"
+      >
+        <!--- Note that these columns can be defined in any order.
+                  The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="sku">
+          <th mat-header-cell *matHeaderCellDef>SKU</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.product.sku }}
+          </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="product">
+          <th mat-header-cell *matHeaderCellDef>Product</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.product.name }}
+          </td>
+        </ng-container>
+
+        <!-- Unit-Price Column -->
+        <ng-container matColumnDef="unitPrice">
+          <th mat-header-cell *matHeaderCellDef>Price/Unit</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.product.price | currency }}/{{
+              element.product.type.soldBy | titlecase
+            }}
+          </td>
+        </ng-container>
+
+        <!-- Quantity Column -->
+        <ng-container matColumnDef="count">
+          <th mat-header-cell *matHeaderCellDef>Quantity</th>
+          <td mat-cell *matCellDef="let element">{{ element.count }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="total">
+          <th mat-header-cell *matHeaderCellDef>Total</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.total | currency }}
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="chargesColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: chargesColumns"></tr>
+      </table>
+
+      <br />
+      <section class="order-bottom">
+        <div class="notes-wrap">
+          <label for="noteInput">NOTES:</label>
+          <textarea
+            matInput
+            class="notes-input"
+            #noteInput
+            [formControl]="notesCtrl"
+            cols="110"
+            rows="5"
+            placeholder="write a note"
+          ></textarea>
+        </div>
+        <!-- Totals -->
+        <div class="total-wrap">
+          <div class="totals">
+            <table>
+              <tr>
+                <td>Total:</td>
+                <td>{{ orderTotal | currency }}</td>
+              </tr>
+              <tr>
+                <td>Taxes:</td>
+                <td>{{ orderTotal * 0.07 | currency }}</td>
+              </tr>
+              <tr class="grand-total">
+                <td>Amount Due:</td>
+                <td>{{ orderTotal * 0.07 + orderTotal | currency }}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <!--  -->
+      </section>
+    </div>
+  </div>
+  <br />
+  <mat-divider></mat-divider>
+  <br />
+</mat-dialog-content>
+
+<div class="actions">
+  <button mat-raised-button color="primary" type="button" (click)="applyNew()">
+    Create
+  </button>
+  <button mat-raised-button type="button" (click)="cancel()">Cancel</button>
+</div>
+
+<!-- 
+        
+    <label for="eCustomer">Customer:</label>
+    <h3 #eCustomer>{{ customer.name | uppercase }}</h3>
+
+    <label for="eCustomer">Shipping Address:</label>
+    <h3 #eCustomer>
+      <app-address-format
+        [address]="entity.shipping_address"
+      ></app-address-format>
+    </h3>
+
+    <mat-divider></mat-divider>
+
+    <br />
+
+    <label for="eVendor">Vendor:</label>
+    <h3 #eVendor>
+      {{ business.name }}
+    </h3>
+
+    <label for="eStatus">Order Status:</label>
+    <h3 #eStatus>{{ entity.status }}</h3>
+
+    <mat-divider></mat-divider>
+
+    <br />
+
+    <h3>Order Details</h3>
+    <table mat-table [dataSource]="charges" class="mat-elevation-z8">
+      <ng-container matColumnDef="product_name">
+        <th mat-header-cell *matHeaderCellDef>Product</th>
+        <td mat-cell *matCellDef="let element">{{ element.product.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="count">
+        <th mat-header-cell *matHeaderCellDef>Quantity</th>
+        <td mat-cell *matCellDef="let element">{{ element.count }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="unit_price">
+        <th mat-header-cell *matHeaderCellDef>Unit Price</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.product.price | currency }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="total">
+        <th mat-header-cell *matHeaderCellDef>Total</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.total | currency }}
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <div class="total-wrap">
+      <div class="totals">
+        <table>
+          <tr>
+            <td>Total:</td>
+            <td>{{ entity.total | currency }}</td>
+          </tr>
+          <tr>
+            <td>Taxes:</td>
+            <td>{{ entity.total * 0.07 | currency }}</td>
+          </tr>
+          <tr class="grand-total">
+            <td>Amount Due:</td>
+            <td>{{ entity.total * 0.07 + entity.total | currency }}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+     -->

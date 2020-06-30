@@ -31,33 +31,36 @@ export class CustomerService extends EntityService {
     super(httpService, authService, dummyDataService, snackbarService);
   }
 
-  getList(){
+  getList() {
     return this.dummyDataService.customerList();
   }
 
-  getDetails(data: Entity): Observable<ApiResponse>{
+  getDetails(data: Entity): Observable<ApiResponse> {
     return this.dummyDataService.customerDetails(data);
   }
 
-  applyNew(data):Observable<ApiResponse>{
+  applyNew(data): Observable<ApiResponse> {
     return this.dummyDataService.applyNew(data);
   }
 
-  applyEdit(data):Observable<ApiResponse>{
+  applyEdit(data): Observable<ApiResponse> {
     return new Observable<ApiResponse>((observer) => {
       console.log('updating data... not really');
-      observer.next({success: true});
+      observer.next({ success: true });
     });
   }
 
-  addContact(contact:Contact) {
+  addContact(contact: Contact) {
     return new Observable<ApiResponse>((observer) => {
       console.log('adding contact... not really');
-      observer.next({success: true});
+      observer.next({ success: true });
     });
   }
-}
 
+  getAvailables(): Observable<ApiResponse> {
+    return this.dummyDataService.getAvailableCustomers();
+  }
+}
 
 // API ENDPOINT
 const endpoints = {

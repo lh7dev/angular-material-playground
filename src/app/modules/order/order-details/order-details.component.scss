@@ -1,3 +1,5 @@
+@import "main";
+
 th {
   padding-left: 10px;
   padding-right: 10px;
@@ -18,22 +20,14 @@ table {
 .totals {
   float: right;
   padding: 20px;
-  *{
+  * {
     font-size: 1.15rem;
   }
-
 }
 
 .grand-total {
   * {
     font-size: 1.3rem;
     font-weight: 500;
-  }
-}
-
-.actions {
-  padding-top: 15px;
-  *{
-    margin-right: 20px;
   }
 }

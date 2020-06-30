@@ -17,10 +17,10 @@ export class BusinessService {
     });
   }
 
-  private toResponse(data:Business) {
+  private toResponse(data: Business) {
     return {
       success: true,
-      data: data,
+      data,
     };
   }
 }
@@ -36,5 +36,5 @@ const BUSINESS: Business = {
     country: 'United States',
   },
   phone: '7863064560',
-  email: 'lh7dev@getMaxListeners.com',
+  email: 'lh7dev@gmail.com',
 };

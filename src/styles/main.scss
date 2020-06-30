@@ -48,8 +48,15 @@
 }
 
 .actions {
-  >* {
+  > * {
     margin-top: 15px;
     margin-right: 15px;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+  .half-width: {
+    width: 50%;
   }
 }

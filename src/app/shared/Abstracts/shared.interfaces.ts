@@ -66,7 +66,7 @@ export interface iEntityListView {
   pageSizeOptions: number[];
   pageEvent: PageEvent;
 
-  refreshList():void;
+  refreshList(): void;
 }
 
 export interface iEntityService {
@@ -76,7 +76,7 @@ export interface iEntityService {
   applyNew(object): Observable<ApiResponse>;
   applyEdit(entity: Entity): Observable<ApiResponse>;
   delete(entities: Entity[]): Observable<ApiResponse>;
-  notify(msg: string, delay?: number)
+  notify(msg: string, delay?: number);
 }
 
 export interface GenericEndpoints {
@@ -86,4 +86,5 @@ export interface GenericEndpoints {
   applyEdit?: string;
   applyNew?: string;
   delete?: string;
+  available?: string;
 }

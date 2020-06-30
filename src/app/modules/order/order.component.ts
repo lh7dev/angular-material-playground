@@ -3,9 +3,7 @@ import {
   EntityView,
   NextAction,
 } from 'src/app/shared/Abstracts/entity-view.class';
-import {
-  Entity
-} from 'src/app/shared/Abstracts/shared.interfaces';
+import { Entity } from 'src/app/shared/Abstracts/shared.interfaces';
 import { OrderNewComponent } from './order-new/order-new.component';
 import {
   DeleteViewComponent,
@@ -39,7 +37,7 @@ export class OrderComponent extends EntityView implements OnInit {
 
   onNew() {
     const dialogRef = this.dialog.open(this.dialogNew, {
-      width: '400px',
+      width: '816px',
       disableClose: true,
       autoFocus: false,
     });
