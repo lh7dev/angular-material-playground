@@ -35,7 +35,7 @@ export class OrderNewComponent implements OnInit {
   charges: MatTableDataSource<Charge> = new MatTableDataSource([]);
   newCharge: Charge | null;
   private productForCharge: Product | null;
-  chargesColumns = ['sku', 'product', 'unitPrice', 'count', 'total'];
+  chargesColumns = ['sku', 'product', 'unitPrice', 'count', 'total', 'delete'];
 
   // tslint:disable: variable-name
   private _availbleCustomers: Customer[];
@@ -296,6 +296,16 @@ export class OrderNewComponent implements OnInit {
         6000
       );
     }
+  }
+
+  removeCharge(item: Charge) {
+    const data = this.charges.data;
+    const index = data.indexOf(item);
+    const newCharges = data.splice(index, 1);
+    console.log(data);
+    this.charges = new MatTableDataSource(data);
+    /*
+     */
   }
 
   get totalCharges(): number {
