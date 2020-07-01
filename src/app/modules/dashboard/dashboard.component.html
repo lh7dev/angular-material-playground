@@ -1,31 +1,101 @@
+<!-- 
 <div>
   <app-widget-area [chartData]="BigChartData"></app-widget-area>
 </div>
+ -->
+<div class="loading-spinner-wrap" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
+</div>
 
-<br>
+<mat-grid-list cols="4" rowHeight="200px" *ngIf="!isLoading">
+  <!-- Area Tile -->
+  <mat-grid-tile
+    [colspan]="currentLyout[0].cols"
+    [rowspan]="currentLyout[0].rows"
+    ><app-widget-area [chartData]="BigChartData"></app-widget-area
+  ></mat-grid-tile>
+  <!-- Card Tiles -->
+  <mat-grid-tile
+    [colspan]="currentLyout[1].cols"
+    [rowspan]="currentLyout[1].rows"
+  >
+    <mat-card class="card-xyz">
+      <app-widget-card [cardData]="widgetCards[0]"></app-widget-card>
+    </mat-card>
+  </mat-grid-tile>
+  <mat-grid-tile
+    [colspan]="currentLyout[2].cols"
+    [rowspan]="currentLyout[2].rows"
+  >
+    <mat-card class="card-xyz">
+      <app-widget-card [cardData]="widgetCards[0]"></app-widget-card>
+    </mat-card>
+  </mat-grid-tile>
+  <mat-grid-tile
+    [colspan]="currentLyout[3].cols"
+    [rowspan]="currentLyout[3].rows"
+  >
+    <mat-card class="card-xyz">
+      <app-widget-card [cardData]="widgetCards[0]"></app-widget-card>
+    </mat-card>
+  </mat-grid-tile>
+  <mat-grid-tile
+    [colspan]="currentLyout[4].cols"
+    [rowspan]="currentLyout[4].rows"
+  >
+    <mat-card class="card-xyz">
+      <app-widget-card [cardData]="widgetCards[0]"></app-widget-card>
+    </mat-card>
+  </mat-grid-tile>
 
-<mat-divider></mat-divider>
+  <!-- Tile Table -->
+  <mat-grid-tile
+    [colspan]="currentLyout[5].cols"
+    [rowspan]="currentLyout[5].rows"
+  >
+    <mat-card class="card-xyz">
+      <app-widget-table [tableData]="tableWidgetData"></app-widget-table>
+    </mat-card>
+  </mat-grid-tile>
 
-<br>
+  <!-- Tile Pie -->
+  <mat-grid-tile
+    [colspan]="currentLyout[6].cols"
+    [rowspan]="currentLyout[6].rows"
+  >
+    <mat-card class="card-xyz">
+      <app-widget-pie [widgetPieData]="pieWidgetData"></app-widget-pie>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>
 
-<div fxLayout="(isHandset$ | async) ? column : row" fxLayoutAlign="space-between center" fxLayoutGap="20px"
-  class="stats-cards">
-  <mat-card fxFlex="(isHandset$ | async) ? 100 : 24" *ngFor="let card of widgetCards" class="card-xyz">
+<!-- 
+<div
+  fxLayout="(isHandset$ | async) ? column : row"
+  fxLayoutAlign="space-between center"
+  fxLayoutGap="20px"
+  class="stats-cards"
+>
+  <mat-card
+    fxFlex="(isHandset$ | async) ? 100 : 24"
+    *ngFor="let card of widgetCards"
+    class="card-xyz"
+  >
     <app-widget-card [cardData]="card"></app-widget-card>
   </mat-card>
 </div>
 
-<br>
+ -->
 
-<mat-divider></mat-divider>
+<!-- 
 
-<br>
-
-<div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
-  <div fxFlex="60">
-    <app-widget-table [tableData]="tableWidgetData"></app-widget-table>
+  <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+    <div fxFlex="60">
+      <app-widget-table [tableData]="tableWidgetData"></app-widget-table>
+    </div>
+    <div fxFlex="40">
+      <app-widget-pie [widgetPieData]="pieWidgetData"></app-widget-pie>
+    </div>
   </div>
-  <div fxFlex="40">
-    <app-widget-pie [widgetPieData]="pieWidgetData"></app-widget-pie>
-  </div>
-</div>
+  
+-->

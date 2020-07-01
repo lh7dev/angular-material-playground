@@ -6,6 +6,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 // Material
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSidenavModule } from '@angular/material/sidenav';
 
 // app modules
@@ -19,10 +21,7 @@ import { DashboardComponent } from 'src/app/modules/dashboard/dashboard.componen
 import { DashboardService } from 'src/app/modules/dashboard.service';
 
 @NgModule({
-  declarations: [
-    DefaultComponent,
-    DashboardComponent
-  ],
+  declarations: [DefaultComponent, DashboardComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -32,11 +31,11 @@ import { DashboardService } from 'src/app/modules/dashboard.service';
     // Materials
     MatCardModule,
     MatDividerModule,
+    MatGridListModule,
+    MatProgressSpinnerModule,
     MatSidenavModule,
   ],
-  providers: [
-    DashboardService
-  ],
+  providers: [DashboardService],
   exports: [],
 })
 export class DefaultModule {}

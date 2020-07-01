@@ -8,12 +8,18 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 @Component({
   selector: 'app-order-list',
   templateUrl: './order-list.component.html',
-  styleUrls: ['./order-list.component.scss']
+  styleUrls: ['./order-list.component.scss'],
 })
 export class OrderListComponent extends ListView implements OnInit {
-
-  desktopDisplayedColumns = ["select", 'number', 'customer', 'status', 'created_on', 'total'];
-  handsetDisplayedColumns = this.desktopDisplayedColumns;
+  desktopDisplayedColumns = [
+    'select',
+    'number',
+    'customer',
+    'status',
+    'created_on',
+    'total',
+  ];
+  handsetDisplayedColumns = ['select', 'number', 'status', 'total'];
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
@@ -23,9 +29,5 @@ export class OrderListComponent extends ListView implements OnInit {
 
   ngOnInit(): void {
     this.refreshList();
-  }
-
-  ngAfterViewInit() {
-    this.initPaginators();
   }
 }

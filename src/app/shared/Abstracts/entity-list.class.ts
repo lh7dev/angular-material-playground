@@ -42,9 +42,7 @@ export abstract class ListView {
   constructor(
     private entityService: iEntityService,
     private breakpointObserver: BreakpointObserver
-  ) {
-
-  }
+  ) {}
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
@@ -133,7 +131,7 @@ export abstract class ListView {
   }
 
   private setDisplayedColumns() {
-    return this.isHandset$.subscribe((isHandset) => {
+    this.isHandset$.subscribe((isHandset) => {
       if (isHandset) {
         this.displayedColumns = this.handsetDisplayedColumns;
       } else {

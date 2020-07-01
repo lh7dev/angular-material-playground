@@ -15,7 +15,7 @@ import { ViewStateService } from 'src/app/shared/services/view-state.service';
 })
 export class DefaultComponent implements OnInit {
   isHandset$: Observable<boolean> = this.breakpointObserver
-    .observe(Breakpoints.Handset)
+    .observe([Breakpoints.Handset, Breakpoints.XSmall, Breakpoints.Small])
     .pipe(map((result) => result.matches));
 
   constructor(
@@ -41,7 +41,7 @@ export class DefaultComponent implements OnInit {
 
   autoClose(drawer) {
     console.log(drawer);
-    this.isHandset$.subscribe(r => {
+    this.isHandset$.subscribe((r) => {
       if (r) {
         drawer.close();
       }
