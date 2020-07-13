@@ -6,9 +6,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MatButtonModule } from '@angular/material/button';
 import { DefaultModule } from './layouts/default/default.module';
+import { UserStateComponent } from './modules/shared/components/user-state/user-state.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, UserStateComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

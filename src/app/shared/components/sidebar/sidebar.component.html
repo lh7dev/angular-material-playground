@@ -1,29 +1,94 @@
 <mat-nav-list>
   <mat-card class="profile-card">
-    <mat-card-header>
+    <mat-card-header *ngIf="!isAuth$">
       <div class="profile-header-content">
-        <mat-card-title>Shiba Inu</mat-card-title>
-        <mat-card-subtitle>lh7dev@gmail.com</mat-card-subtitle>
+        <a
+          mat-stroked-button
+          color="primary"
+          routerLink="/auth"
+          (click)="onNavigation()"
+          ><mat-icon>account_circle</mat-icon> login</a
+        >
       </div>
-      <img mat-card-avatar src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+    </mat-card-header>
+
+    <mat-card-header *ngIf="isAuth$">
+      <div class="profile-header-content">
+        <mat-card-title>{{ userDetails$.name }}</mat-card-title>
+        <button mat-button color="primary" (click)="signOut()">Sign Out</button>
+      </div>
+      <img
+        mat-card-avatar
+        [src]="userDetails$.avatarImgUrl"
+        alt="Photo of a
+      Shiba Inu"
+      />
     </mat-card-header>
   </mat-card>
 
   <mat-divider></mat-divider>
   <h2 matSubheader>Operations</h2>
 
-  <a mat-list-item routerLinkActive="list-item-active" routerLink="/" (click)="onNavigation()">Dashboard</a>
-  <a mat-list-item routerLinkActive="list-item-active" routerLink="/customers" (click)="onNavigation()">Customers</a>
-  <a mat-list-item routerLinkActive="list-item-active" routerLink="/products" (click)="onNavigation()">Products & Services</a>
-  <a mat-list-item routerLinkActive="list-item-active" routerLink="/inventory" (click)="onNavigation()">Inventory</a>
-  <a mat-list-item routerLinkActive="list-item-active" routerLink="/orders" (click)="onNavigation()">Orders</a>
-  <a mat-list-item routerLinkActive="list-item-active" routerLink="/invoices" (click)="onNavigation()">Invoices</a>
-  <a mat-list-item routerLinkActive="list-item-active" routerLink="/payments" (click)="onNavigation()">Payments</a>
-  <a mat-list-item routerLinkActive="list-item-active" routerLink="/users" (click)="onNavigation()">Users</a>
+  <a
+    mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/"
+    (click)="onNavigation()"
+    >Dashboard</a
+  >
+  <a
+    mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/customers"
+    (click)="onNavigation()"
+    >Customers</a
+  >
+  <a
+    mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/products"
+    (click)="onNavigation()"
+    >Products & Services</a
+  >
+  <a
+    mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/inventory"
+    (click)="onNavigation()"
+    >Inventory</a
+  >
+  <a
+    mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/orders"
+    (click)="onNavigation()"
+    >Orders</a
+  >
+  <a
+    mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/invoices"
+    (click)="onNavigation()"
+    >Invoices</a
+  >
+  <a
+    mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/payments"
+    (click)="onNavigation()"
+    >Payments</a
+  >
+  <a
+    mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/users"
+    (click)="onNavigation()"
+    >Users</a
+  >
 
   <mat-divider></mat-divider>
   <h2 matSubheader>Tools</h2>
-<!--
+  <!--
   <a mat-list-item routerLinkActive="list-item-active" routerLink="/contacts">
     <mat-icon>import_contacts</mat-icon>
     Contacts

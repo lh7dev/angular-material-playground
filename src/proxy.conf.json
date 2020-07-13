@@ -1,0 +1,11 @@
+{
+  "/backend": {
+    "target": "https://us-central1-crm-api-gateway.cloudfunctions.net/api",
+    "secure": true,
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/backend": ""
+    },
+    "changeOrigin": true
+  }
+}

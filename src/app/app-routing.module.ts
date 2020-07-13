@@ -10,6 +10,7 @@ import { OrderModule } from './modules/order/order.module';
 import { InvoiceModule } from './modules/invoice/invoice.module';
 import { PaymentModule } from './modules/payment/payment.module';
 import { UserModule } from './modules/user/user.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 const routes: Routes = [
   {
@@ -19,6 +20,10 @@ const routes: Routes = [
       {
         path: '',
         component: DashboardComponent,
+      },
+      {
+        path: 'auth',
+        loadChildren: './modules/auth/auth.module#AuthModule',
       },
 
       {
@@ -53,7 +58,7 @@ const routes: Routes = [
       {
         path: 'settings',
         loadChildren: './modules/settings/settings.module#SettingsModule',
-      }
+      },
     ],
   },
   {

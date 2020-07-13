@@ -38,6 +38,7 @@ import { PhonePipe } from './directives/phone-pipe.directive';
 import { ViewStateService } from './services/view-state.service';
 import { BusinessService } from './services/business.service';
 import { AddressFormatComponent } from './components/address-format/address-format.component';
+import { AuthModule } from '../modules/auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,7 @@ import { AddressFormatComponent } from './components/address-format/address-form
     EntityToolbarComponent,
     DeleteViewComponent,
     PhonePipe,
-    AddressFormatComponent
+    AddressFormatComponent,
   ],
   imports: [
     CommonModule,
@@ -73,7 +74,9 @@ import { AddressFormatComponent } from './components/address-format/address-form
     MatSnackBarModule,
     MatTableModule,
     MatTabsModule,
-    MatToolbarModule
+    MatToolbarModule,
+    // App
+    AuthModule,
   ],
   exports: [
     HeaderComponent,
@@ -86,7 +89,7 @@ import { AddressFormatComponent } from './components/address-format/address-form
     EntityToolbarComponent,
     DeleteViewComponent,
     PhonePipe,
-    AddressFormatComponent
+    AddressFormatComponent,
   ],
 
   providers: [AuthService, DummyDataService, ViewStateService, BusinessService],

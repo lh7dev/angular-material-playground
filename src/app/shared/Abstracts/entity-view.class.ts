@@ -3,8 +3,7 @@ import { iEntityListView, Entity } from './shared.interfaces';
 import { MatDialog } from '@angular/material/dialog';
 
 export abstract class EntityView {
-
-  constructor(private matDialog: MatDialog){}
+  constructor(private matDialog: MatDialog) {}
 
   abstract title: string;
 
@@ -20,15 +19,15 @@ export abstract class EntityView {
 
   abstract listRef: iEntityListView;
 
-  abstract onNew():void;
+  abstract onNew(): void;
 
   abstract onDelete();
 
-  abstract onSelect(e:Entity);
+  abstract onSelect(e: Entity);
 
   onOpenEdit(e: Entity) {
     const dialogRef = this.matDialog.open(this.dialogEdit, {
-      width: '400px',
+      width: '816px',
       autoFocus: false,
       data: e,
     });
@@ -50,13 +49,12 @@ export abstract class EntityView {
     this.checkedItems = event;
   }
 
-  entityRefText(singular:string,plural:string){
+  entityRefText(singular: string, plural: string) {
     let count = this.checkedItems.length;
     const x = count > 1 ? plural : singular;
     return x;
   }
 }
-
 
 export interface NextAction {
   next?: string;

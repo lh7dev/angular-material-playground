@@ -1,0 +1,31 @@
+<div class="login-component">
+  <mat-card>
+    <div class="card-header">
+      <h2>Login</h2>
+    </div>
+    <mat-card-content>
+      <div class="login-form">
+        <form action="">
+          <mat-form-field>
+            <input matInput type="text" placeholder="Username" required />
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput type="password" placeholder="Password" required />
+          </mat-form-field>
+          <button mat-raised-button color="primary">login</button>
+        </form>
+      </div>
+      <div class="third-aprty-login">
+        <h3>OR USE</h3>
+
+        <a mat-stroked-button class="google login-third" [href]="authPath">
+          <img
+            src="assets/login/btn_google_signin_light_focus_web.png"
+            alt="google login"
+          />
+        </a>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

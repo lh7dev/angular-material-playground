@@ -7,20 +7,20 @@ import { NextAction } from 'src/app/shared/Abstracts/entity-view.class';
 import { Customer } from 'src/app/shared/Abstracts/customer.interface';
 import { Business } from 'src/app/shared/Abstracts/business.interface';
 import { BusinessService } from 'src/app/shared/services/business.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-order-details',
   templateUrl: './order-details.component.html',
-  styleUrls: ['./order-details.component.scss']
+  styleUrls: ['./order-details.component.scss'],
 })
-
 export class OrderDetailsComponent implements OnInit {
   entity: Order | null;
   customer: Customer | null;
   business: Business | null;
-  charges: Charge[] | null;
+  charges: MatTableDataSource<Charge> = new MatTableDataSource<Charge>();
 
-  displayedColumns = ["product_name", "count", "unit_price", "total"];
+  chargesColumns = ['sku', 'product', 'unitPrice', 'count', 'total'];
 
   private loading: boolean = true;
 
@@ -31,17 +31,17 @@ export class OrderDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.entity = <Order>this.data;
+    this.entity = this.data as Order;
     this.refreshData();
   }
 
   refreshData(): void {
     this.loading = true;
     this.service.getDetails({ id: this.data.id }).subscribe((result) => {
-      if (result.success == true) {
-        this.entity = <Order>result.data[0];
+      if (result.success === true) {
+        this.entity = result.data[0] as Order;
         this.business = this.entity.business;
-        this.charges = this.entity.charges;
+        this.charges = new MatTableDataSource(this.entity.charges);
         this.customer = this.entity.customer;
         this.loading = false;
       } else {
@@ -73,5 +73,19 @@ export class OrderDetailsComponent implements OnInit {
 
   get isLoading(): boolean {
     return this.loading;
+  }
+
+  get totalCharges(): number {
+    return this.charges.data.length;
+  }
+
+  get orderTotal(): number {
+    let total = 0;
+    if (this.totalCharges > 0) {
+      for (const ch of this.charges.data) {
+        total += ch.total;
+      }
+    }
+    return total;
   }
 }

@@ -21,6 +21,7 @@ export interface Order extends Entity {
   total: number;
   date_created: Date;
   date_fulfilled?: Date;
+  notes?: string | null;
 }
 
 export interface EditOrderFormData {
