@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'mambi-admin-dashboard'`, () => {
+  it(`should have as title 'angular-material-playground'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('mambi-admin-dashboard');
+    expect(app.title).toEqual('angular-material-playground');
   });
 
   /* it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('mambi-admin-dashboard app is running!');
+    expect(compiled.querySelector('.content span').textContent).toContain('angular-material-playground app is running!');
   }); */
 });
