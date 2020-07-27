@@ -32,7 +32,7 @@
             "stylePreprocessorOptions": {
               "includePaths": ["src/styles"]
             },
-            "scripts": []
+            "scripts": ["src/pens/everything-connected.js"]
           },
           "configurations": {
             "production": {
